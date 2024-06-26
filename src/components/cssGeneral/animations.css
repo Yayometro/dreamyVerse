@@ -1,0 +1,5 @@
+  /* //ANIMATIONS */
+  .fadeInUpOneSeg{
+    animation: fadeInUp;
+    animation-duration: 1s;
+}
