@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ICommentDream, IDreamDocument } from "../../../../dreamyVerse";
 import CommentCard from "../commentCard/CommentCard";
+import NoFiles from "@/components/NoData/NoFiles/NoFiles";
 
 function CommentsCardSection({ father }: { father: IDreamDocument }) {
   const [userEmail, setUserEmail] = useState<string | null>(null);
@@ -59,9 +60,12 @@ function CommentsCardSection({ father }: { father: IDreamDocument }) {
 
   return (
     <div className="flex flex-col gap-2">
-      {!comments
-        ? "No comments here..."
-        : comments.map((comment) => (<CommentCard key={`comment-card-post-key-${comment._id}`} comment={comment} father={father}/>
+      {!comments || comments.length <= 0
+        ? (
+          <div className="w-full h-full py-4">
+            <NoFiles message="This dream has no comments, be the first one to comment!" />
+          </div>
+        ) : comments.map((comment) => (<CommentCard key={`comment-card-post-key-${comment._id}`} comment={comment} father={father}/>
           ))}
     </div>
   );

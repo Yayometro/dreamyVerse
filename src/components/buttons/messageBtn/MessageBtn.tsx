@@ -16,13 +16,16 @@ import {
   Button,
   Spinner,
 } from "@nextui-org/react";
-import React, { useEffect, useState } from "react";
-import { IUserDocument } from "../../../../dreamyVerse";
+import React, { useContext, useEffect, useState } from "react";
+import { IMessage, IUserDocument, MessageContextType } from "../../../../dreamyVerse";
 import socket from "@/lib/socket";
 import useUserNavigator from "@/hooks/useUserNavigatorId";
 import { BiSolidMessageRounded } from "react-icons/bi";
 import MessageCenter from "@/components/messages/messagesCenter/MessageCenter";
 import MessageHistoryNavigator from "@/components/messages/messageHistoryNavigator/MessageHistoryNavigator";
+import MessageTexbox from "@/components/messages/messageTextbox/MessageTexbox";
+import { MessageContext } from "@/providers/messages/MessageProvider";
+import notifier from "@/helpers/notifier";
 
 function MessageBtn({
   userNavigator,
@@ -31,42 +34,35 @@ function MessageBtn({
   userNavigator?: IUserDocument;
   displayMode?: "btn" | "full";
 }) {
-  const [activeConversationList, setActiveConversationList] =
-    useState<boolean>(false);
   const [side, setSide] = useState<
     "top" | "bottom" | "left" | "right" | null | undefined
   >("right");
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isLoadingMore, setIsLoadingMore] = useState<boolean>(false);
-  const [unreadMessages, setUnreadMessages] = useState<any[]>([]);
   const { userId } = useUserNavigator();
-  //   const { data, error, isLoading, isError } = useGetAllUserNotificationsQuery(
-  //     userId,
-  //     {
-  //       skip: !userId,
-  //     }
-  //   );
+  //Get the context
+  const context = useContext(MessageContext);
+  if (!context) {
+    throw new Error("SomeComponent must be used within a MessageProvider");
+  }
+  const {
+    currentConversation,
+    unreadMessages,
+    setUnreadMessages
+  } = context as MessageContextType;
 
-  //   useEffect(() => {
-  //     socket.on("notification", (notification) => {
-  //       console.log(notification)
-  //       setNotifications((prev) => [...prev, notification]);
-  //     });
+  useEffect(() => {
+    socket.on("receiveMessage", (newMessage: IMessage) => {
+      setUnreadMessages((prevMessages) => [newMessage, ...prevMessages])
+      notifier("info", `New message from ${newMessage.fromUser || (newMessage.fromUser as IUserDocument)?.username}.
+      Description: ${newMessage.content.message}`)
+    });
 
-  //     return () => {
-  //       console.log(socket)
-  //       socket.off("notification");
-  //     };
-  //   }, []);
-
-  //   useEffect(() => {
-  //     if (data) {
-  //       setNotifications(data.data);
-  //     } else if (isError || isLoading) {
-  //       console.log(error);
-  //       console.log(isLoading);
-  //     }
-  //   }, [data, isLoading, isError, error]);
+    // Limpiar el evento cuando el componente se desmonte
+    return () => {
+      socket.off("receiveMessage");
+    };
+  })
 
   useEffect(() => {
     const handleResize = () => {
@@ -101,7 +97,6 @@ function MessageBtn({
             size="sm"
             className=" w-full h-full text-default-100 dark:text-default-900 p-0s px-1 cursor-pointer flex justify-center lg:justify-start items-center"
             onClick={() => {
-              setActiveConversationList(true);
               setIsOpen(true);
             }}
           >
@@ -124,7 +119,6 @@ function MessageBtn({
             size="sm"
             className="text-default-900 p-0 cursor-pointer"
             onClick={() => {
-              setActiveConversationList(true);
               setIsOpen(true);
             }}
           >
@@ -138,13 +132,13 @@ function MessageBtn({
 
       <SheetContent
         side={side}
-        className={`w-full h-[97%] border-violet-800 md:w-[750px] md:h-full md:border-l-1 pb-[50px] shadow-inner overflow-y-auto bg-violet-50 dark:bg-black text-black dark:text-white ${
+        className={`w-full h-screen border-violet-800 md:w-[750px] md:h-full md:border-l-1 pb-[50px] shadow-inner overflow-y-auto bg-violet-50 dark:bg-black text-black dark:text-white flex flex-col ${
           side === "bottom"
             ? "rounded-3xls rounded-t-3xl"
             : "rounded-3xls rounded-l-3xl"
         }`}
       >
-        <SheetHeader>
+        <SheetHeader className="w-full h-fit">
           <SheetTitle className="text-black dark:text-white">
             Message Center 💬
             <div className="flex justify-start items-center pt-2">
@@ -154,14 +148,12 @@ function MessageBtn({
           <SheetDescription className="w-full flex justify-center items-center py-2">
           </SheetDescription>
         </SheetHeader>
-        <div className="body-comment w-full overflow-y-auto flex flex-col justify-between items-start">
+        <div className="body-comment w-full h-full overflow-y-auto flex flex-col justify-between items-start">
           <MessageCenter userId={userId as string} />
           <div className="footer-block h-[20px] w-full fixed bottom-0 bg-slate-100 dark:bg-black shadow-lg"></div>
         </div>
-        <SheetFooter className="">
-          {/* <SheetClose asChild onClick={handleSheetClose}>
-            <Button variant="light">Close</Button>
-          </SheetClose> */}
+        <SheetFooter className="sheet-footer-messenger absolute bottom-3 left-0 w-full pt-1 pb-2 px-4">
+          {currentConversation && <MessageTexbox />}
         </SheetFooter>
       </SheetContent>
     </Sheet>

@@ -13,7 +13,7 @@ function MessageHistoryNavigator() {
   if (!context) {
     throw new Error("SomeComponent must be used within a MessageProvider");
   }
-  const { navigation, userSelectedConversation, handleBackClick } = context;
+  const { navigation, userSelectedConversation, handleBackClick, setCurrentConversation } = context;
   const itemStyle = " hover:underline cursor-pointer";
   const itemColor = "foreground";
   return (
@@ -35,7 +35,10 @@ function MessageHistoryNavigator() {
             as={"button"}
             isIconOnly
             variant="light"
-            onClick={handleBackClick}
+            onClick={() => {
+              setCurrentConversation(null)
+              handleBackClick()
+            }}
             className="w-full h-full"
             >
               <FaAngleLeft className="w-full h-full"/>
@@ -44,7 +47,7 @@ function MessageHistoryNavigator() {
           <div className="details flex justify-center items-center">
             <GeneralAvatar src={`${userSelectedConversation?.avatar || ""}`} radius="full" size="md"/>
           </div>
-          <div className="details flex flex-col justify-center items-start">
+          <div className="details flex flex-col justify-start items-start">
             <h1 className=" text-base font-semibold">{userSelectedConversation?.username}</h1>
             <p className=" text-sm">{userSelectedConversation?.zodiac || "no zodiac"}</p>
           </div>

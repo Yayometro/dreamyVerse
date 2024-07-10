@@ -23,7 +23,7 @@ function ConversationItem({ conversation }: { conversation: IConversation }) {
   if (!context) {
     throw new Error("SomeComponent must be used within a ConversationItem");
   }
-  const { setUserSelectedConversation, handleConversationClick } =
+  const { setUserSelectedConversation, handleConversationClick, setCurrentConversation } =
     context as MessageContextType;
 
   useEffect(() => {
@@ -42,7 +42,6 @@ function ConversationItem({ conversation }: { conversation: IConversation }) {
         const userTo =
           participants.find((participant) => participant._id !== userId) ||
           null;
-        console.log(userTo);
         setUserTo(userTo);
       }
     }
@@ -50,9 +49,9 @@ function ConversationItem({ conversation }: { conversation: IConversation }) {
 
   const handleSelectionConversation = () => {
     setUserSelectedConversation(userTo);
+    setCurrentConversation(conversation)
     handleConversationClick(conversation); //only change the navigation to "conversation" with useCallback
   };
-  console.log(userTo);
   return (
     <div
       className="w-full flex gap-2 p-2 justify-start items-center bg-violet-200 dark:bg-slate-900 hover:bg-violet-300 hover:dark:bg-slate-800 rounded-lg cursor-pointer"

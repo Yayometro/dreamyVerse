@@ -3,17 +3,18 @@
 import React, { useContext, useEffect, useState } from "react";
 import { IConversation, IUserDocument } from "../../../../dreamyVerse";
 import { useGetAllUserConversationsQuery } from "@/redux/features/api/apiSlice";
-import NoData from "@/components/NoData/NoData";
 import InputTagPeople from "@/components/inputs/inputTagPeople/InputTagPeople";
 import SearchUsers from "@/components/search/searchUsers/SearchUsers";
 import ConversationView from "../conversationView/ConversationView";
 import { MessageContext } from "@/providers/messages/MessageProvider";
 import ConversationItem from "../conversationItem/ConversationItem";
 import { ScrollShadow, Skeleton } from "@nextui-org/react";
+import NoFiles from "@/components/NoData/NoFiles/NoFiles";
+import NoData from "@/components/NoData/NoData";
 
 function MessageCenter({ userId }: { userId: string }) {
   const [conversations, setConversation] = useState<[] | IConversation[]>([]);
-
+  console.log("first")
   const { data, isError, error, isLoading } =
     useGetAllUserConversationsQuery(userId);
 
@@ -34,7 +35,9 @@ function MessageCenter({ userId }: { userId: string }) {
 
   if(isError){
     console.log(error)
-    return <div className="">Error</div>
+    return <div className="w-full h-full">
+      <NoData message="Something went wrong, please reload and try again" />
+    </div>
   }
   if (isLoading) {
     return (
@@ -53,8 +56,9 @@ function MessageCenter({ userId }: { userId: string }) {
       </div>
     );
   }
+  
   return (
-    <div className="w-full">
+    <div className="message-center-gen-container w-full h-full">
       {navigation === "list" ? (
         <div className="w-full">
           <div className="searcher w-full py-2">
@@ -62,7 +66,7 @@ function MessageCenter({ userId }: { userId: string }) {
           </div>
           {conversations.length <= 0 ? (
             <div className="w-full h-full flex justify-center items-center py-8">
-              <NoData
+              <NoFiles
                 message={`You don't have conversations to display here. Make your first one and send a message to a friend! 😉`}
               />
             </div>

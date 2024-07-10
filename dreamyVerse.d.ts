@@ -105,16 +105,17 @@ export interface IMessage extends Document {
   conversation: mongoose.Types.ObjectId;
   content: {
     message: string;
-    media: string;
+    media?: string;
   };
   read: boolean,
   removed: {
-    for: mongoose.Types.ObjectId[];
+    for: mongoose.Types.ObjectId[] | [];
     forAll: boolean;
   };
+  createdAt?: string | Date
 }
 export interface IConversation extends Document {
-  participants: mongoose.Types.ObjectId[] | IUserDocument | string;
+  participants: mongoose.Types.ObjectId[] | IUserDocument[] | string[];
   isGroup: boolean;
   isBlocked?: boolean;
   isMuted?: boolean;

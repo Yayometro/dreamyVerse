@@ -1,6 +1,6 @@
 // apiSlice.ts
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { IConversation } from "../../../../dreamyVerse";
+import { IConversation, IMessage } from "../../../../dreamyVerse";
 
 const urlApi = process.env.API_ROUTE || "http://localhost:3503/api/";
 
@@ -26,6 +26,7 @@ export const apiSlice = createApi({
     "getAllUserNotifications",
     "getAllUserConversations",
     "conversationAlreadyExist",
+    "getAllMessagesPerConversation",
   ],
   endpoints: (builder) => ({
     //USER:
@@ -257,7 +258,35 @@ export const apiSlice = createApi({
         `conversations/conversationAlreadyExist?idOne=${ids.one}&idTwo=${ids.two}`,
       providesTags: ["conversationAlreadyExist"],
     }),
+    getAllMessagesPerConversation: builder.query({
+      query: (id:string) =>
+        `conversations/getAllMessagesPerConversation?id=${id}`,
+      providesTags: ["getAllMessagesPerConversation"],
+    }),
     //MESSAGES
+    createMessage: builder.mutation({
+      query: (message:IMessage) => ({
+        url: `messages/createMessage`,
+        method: "POST",
+        body: message,
+      }),
+      invalidatesTags: ["getAllMessagesPerConversation"],
+    }),
+    removeMessage: builder.mutation({
+      query: (id:string) => ({
+        url: `messages/removeMessage?id=${id}`,
+        method: "POST",
+      }),
+      invalidatesTags: ["getAllMessagesPerConversation"],
+    }),
+    updateMessage: builder.mutation({
+      query: (message:IMessage) => ({
+        url: `messages/editMessage`,
+        method: "POST",
+        body: message
+      }),
+      invalidatesTags: ["getAllMessagesPerConversation"],
+    }),
   }),
 });
 
@@ -301,5 +330,10 @@ export const {
   //CONVERSATIONS
   useCreateUserConversationMutation,
   useGetAllUserConversationsQuery,
-  useConversationAlreadyExistQuery
+  useConversationAlreadyExistQuery,
+  useGetAllMessagesPerConversationQuery,
+  //MESSAGES
+  useCreateMessageMutation,
+  useRemoveMessageMutation,
+  useUpdateMessageMutation,
 } = apiSlice;
