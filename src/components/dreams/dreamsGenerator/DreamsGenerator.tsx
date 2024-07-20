@@ -57,6 +57,7 @@ import UserFollowersSelctor from "@/components/inputs/friendsSelector/UserFollow
 import { useSearchParams } from "next/navigation";
 import useCreateNotification from "@/hooks/useCreateNotification";
 import useUserNavigator from "@/hooks/useUserNavigatorId";
+import { playNewDreamSound } from "@/helpers/soundsHelper";
 
 interface DreamsGeneratorPropsTypes {
   dgIsOpen: boolean;
@@ -155,8 +156,6 @@ function DreamsGenerator({
     }
   }, [onEditionDream, qSetVisibilityFor]);
 
-  //Const fetvher
-  const fetcher = fetcherApi();
   //Handle input change
   const handleInputChange = (key: string, value: any) => {
     setFormData({ ...formData, [key as any]: value });
@@ -211,6 +210,7 @@ function DreamsGenerator({
         notifier("ok", `${dream?.data?.message}`);
         cleanerForm();
         setIsLoading(false);
+        playNewDreamSound()
         dgOnClose();
         return null;
       }
@@ -223,6 +223,7 @@ function DreamsGenerator({
         notifier("ok", `${dream?.data?.message}`);
         cleanerForm();
         setIsLoading(false);
+        playNewDreamSound()
         dgOnClose();
       }
       setIsLoading(false);

@@ -16,7 +16,7 @@ import {
   Button,
   Spinner,
 } from "@nextui-org/react";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { IMessage, IUserDocument, MessageContextType } from "../../../../dreamyVerse";
 import socket from "@/lib/socket";
 import useUserNavigator from "@/hooks/useUserNavigatorId";
@@ -26,6 +26,8 @@ import MessageHistoryNavigator from "@/components/messages/messageHistoryNavigat
 import MessageTexbox from "@/components/messages/messageTextbox/MessageTexbox";
 import { MessageContext } from "@/providers/messages/MessageProvider";
 import notifier from "@/helpers/notifier";
+import MessageNotificationToast from "@/components/notifications/MessageNotificationToast/MessageNotificationToast";
+import { initializeSounds, playMessageSound } from "@/helpers/soundsHelper";
 
 function MessageBtn({
   userNavigator,
@@ -47,22 +49,9 @@ function MessageBtn({
   }
   const {
     currentConversation,
-    unreadMessages,
-    setUnreadMessages
+    unreadMessagesActions,
   } = context as MessageContextType;
-
-  useEffect(() => {
-    socket.on("receiveMessage", (newMessage: IMessage) => {
-      setUnreadMessages((prevMessages) => [newMessage, ...prevMessages])
-      notifier("info", `New message from ${newMessage.fromUser || (newMessage.fromUser as IUserDocument)?.username}.
-      Description: ${newMessage.content.message}`)
-    });
-
-    // Limpiar el evento cuando el componente se desmonte
-    return () => {
-      socket.off("receiveMessage");
-    };
-  })
+  const sheetRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const handleResize = () => {
@@ -82,7 +71,10 @@ function MessageBtn({
     };
   }, []);
 
-  const handleSheetClose = () => {
+  const handleSheetClose = (event: React.MouseEvent) => {
+    if (sheetRef.current && sheetRef.current.contains(event.target as Node)) {
+      return;
+    }
     setIsOpen(false);
   };
 
@@ -102,7 +94,7 @@ function MessageBtn({
           >
             <Badge
               color="primary"
-              content={unreadMessages.length}
+              content={unreadMessagesActions.unread.length + unreadMessagesActions.edited.length + unreadMessagesActions.removed.length + unreadMessagesActions.markedVisible.length}
               shape="circle"
               showOutline={false}
               size="sm"
@@ -132,7 +124,7 @@ function MessageBtn({
 
       <SheetContent
         side={side}
-        className={`w-full h-screen border-violet-800 md:w-[750px] md:h-full md:border-l-1 pb-[50px] shadow-inner overflow-y-auto bg-violet-50 dark:bg-black text-black dark:text-white flex flex-col ${
+        className={` w-full h-screen border-violet-800 md:w-[750px] md:h-full md:border-l-1 pb-[50px] shadow-inner overflow-y-auto bg-violet-50 dark:bg-black text-black dark:text-white flex flex-col ${
           side === "bottom"
             ? "rounded-3xls rounded-t-3xl"
             : "rounded-3xls rounded-l-3xl"

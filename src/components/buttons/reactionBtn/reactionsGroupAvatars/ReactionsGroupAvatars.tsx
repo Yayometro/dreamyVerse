@@ -21,8 +21,6 @@ import { MdError } from "react-icons/md";
 import Link from "next/link";
 import fetcherFetch from "@/helpers/fetcher";
 import { UserCard } from "@/components/user/userCards/UserCards";
-import Image from "next/image";
-import GeneralAvatar from "@/components/user/generalAvtar/GeneralAvtara";
 import MiniUserItemList from "../../user/miniUserItemList/MiniUserItemList";
 
 function ReactionsGroupAvatars({

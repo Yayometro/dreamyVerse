@@ -1,7 +1,7 @@
 "use client";
 
 import { User } from "@nextui-org/react";
-import React from "react";
+import React, { use } from "react";
 import {
   ICommentDream,
   IDreamDocument,
@@ -39,6 +39,7 @@ function CommentCard({
           src={userWhoComment?.avatar as string}
           radius="full"
           size="md"
+          username={userWhoComment.username}
         />
 
         <div className="cc-body-content w-full h-full flex flex-col gap-1 break-words whitespace-normal overflow-hidden">

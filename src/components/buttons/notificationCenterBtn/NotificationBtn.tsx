@@ -1,7 +1,6 @@
-"use client";
+"use client"
 import {
   Sheet,
-  SheetClose,
   SheetContent,
   SheetDescription,
   SheetFooter,
@@ -11,21 +10,17 @@ import {
 } from "@/components/ui/sheet";
 import { Badge, Button, Spinner } from "@nextui-org/react";
 import React, { useEffect, useState } from "react";
-import {
-  IDreamDocument,
-  INotification,
-  IUserDocument,
-} from "../../../../dreamyVerse";
 import { MdNotifications } from "react-icons/md";
-import SearchClient from "@/components/search/SearchClient";
 import NotificationCenter from "@/components/notifications/NotificationCenter";
-import socket from "@/lib/socket";
 import useUserNavigator from "@/hooks/useUserNavigatorId";
 import {
   useGetAllUserNotificationsQuery,
   useRemoveAllNotificationsMutation,
 } from "@/redux/features/api/apiSlice";
+import { useSocket } from "@/providers/notifications/NotificationsProvider";
+import { initializeSounds } from "@/helpers/soundsHelper";
 import notifier from "@/helpers/notifier";
+import { IUserDocument } from "../../../../dreamyVerse";
 
 function NotificationBtn({
   userNavigator,
@@ -34,41 +29,31 @@ function NotificationBtn({
   userNavigator?: IUserDocument;
   displayMode?: "btn" | "full";
 }) {
-  const [activeNotifySection, setActiveNotifySection] =
-    useState<boolean>(false);
-  const [side, setSide] = useState<
-    "top" | "bottom" | "left" | "right" | null | undefined
-  >("right");
+  const [activeNotifySection, setActiveNotifySection] = useState<boolean>(false);
+  const [side, setSide] = useState<"top" | "bottom" | "left" | "right" | null | undefined>("right");
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isLoadingMore, setIsLoadingMore] = useState<boolean>(false);
-  const [notifications, setNotifications] = useState<INotification[]>([]);
   const { userId } = useUserNavigator();
-  const { data, error, isLoading, isError } = useGetAllUserNotificationsQuery(
+  const { data, error, isLoading, isError, refetch } = useGetAllUserNotificationsQuery(
     userId,
     {
       skip: !userId,
     }
   );
   const [clearNotifications] = useRemoveAllNotificationsMutation();
+  const { notifications, setNotifications } = useSocket();
 
   useEffect(() => {
-    socket.on("notification", (notification) => {
-      console.log(notification);
-      setNotifications((prev) => [...prev, notification]);
-    });
-
-    return () => {
-      console.log(socket);
-      socket.off("notification");
-    };
+    initializeSounds();
   }, []);
 
   useEffect(() => {
     if (data) {
       setNotifications(data.data);
+      refetch()
     } else if (isError || isLoading) {
-      console.log(error);
-      console.log(isLoading);
+      // console.log(error);
+      // console.log(isLoading);
     }
   }, [data, isLoading, isError, error]);
 
@@ -80,11 +65,8 @@ function NotificationBtn({
         setSide("right");
       }
     };
-    // Set the initial value based on the current window size
     handleResize();
-    // Add event listener to handle window resize
     window.addEventListener("resize", handleResize);
-    // Clean up the event listener on component unmount
     return () => {
       window.removeEventListener("resize", handleResize);
     };
@@ -107,6 +89,7 @@ function NotificationBtn({
           "Something went wrong trying to delete all the notifications, please reload the page or try again later... 🤕"
         );
       }
+      setNotifications([])
       notifier("ok", "All notifications removed 👌");
       setIsLoadingMore(false);
       return null;
@@ -121,9 +104,7 @@ function NotificationBtn({
       <SheetTrigger asChild>
         {!displayMode || displayMode === "btn" ? (
           <Button
-            // isIconOnly
             variant="light"
-            // color="success"
             size="sm"
             className=" w-full h-full text-default-100 dark:text-default-900 p-0s px-1 cursor-pointer flex justify-center lg:justify-start items-center"
             onClick={() => {
@@ -148,7 +129,6 @@ function NotificationBtn({
           <Button
             isIconOnly
             variant="light"
-            // color="success"
             size="sm"
             className="text-default-900 p-0 cursor-pointer"
             onClick={() => {
@@ -175,7 +155,7 @@ function NotificationBtn({
           <SheetDescription className="w-full flex justify-center items-center py-2">
             <Button
               variant="light"
-              onClick={() => handleClearAll()}
+              onClick={handleClearAll}
               className=" w-full flex gap-2 text-black dark:text-white bg-violet-300 dark:bg-violet-900 hover:bg-violet-400 dark:hover:bg-violet-800"
             >
               <p>Clear all notifications</p>
@@ -191,9 +171,6 @@ function NotificationBtn({
           <div className="footer-block h-[20px] w-full fixed bottom-0 bg-slate-100 dark:bg-black shadow-lg"></div>
         </div>
         <SheetFooter className="">
-          {/* <SheetClose asChild onClick={handleSheetClose}>
-            <Button variant="light">Close</Button>
-          </SheetClose> */}
         </SheetFooter>
       </SheetContent>
     </Sheet>

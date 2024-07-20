@@ -2,7 +2,8 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { IConversation, IMessage } from "../../../../dreamyVerse";
 
-const urlApi = process.env.API_ROUTE || "http://localhost:3503/api/";
+const urlApi = process.env.NEXT_PUBLIC_API_ROUTE + "/api/"
+
 
 export const apiSlice = createApi({
   reducerPath: "api",
@@ -191,9 +192,11 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: [
         "amIFollowingThisUser",
+        "amIFollowingThisDream",
         "getListOfUsersFollowedByUser",
         "getUserFollowers",
         "getUsersFollowingDream",
+        "getHomeFeed"
       ],
     }),
     removeFollow: builder.mutation({
@@ -204,9 +207,11 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: [
         "amIFollowingThisUser",
+        "amIFollowingThisDream",
         "getListOfUsersFollowedByUser",
         "getUserFollowers",
         "getUsersFollowingDream",
+        "getHomeFeed"
       ],
     }),
     // NOTIFICATIONS:
@@ -240,6 +245,11 @@ export const apiSlice = createApi({
       invalidatesTags: ["getAllUserNotifications"],
     }),
     //CONVERSATIONS
+    getAllUserConversations: builder.query({
+      query: (userId:string) =>
+        `conversations/getAllUserConversations?id=${userId}`,
+      providesTags: ["getAllUserConversations"],
+    }),
     createUserConversation: builder.mutation({
       query: (conversation:IConversation) => ({
         url: `conversations/createUserConversation`,
@@ -247,11 +257,6 @@ export const apiSlice = createApi({
         body: conversation,
       }),
       invalidatesTags: ["getAllUserConversations"],
-    }),
-    getAllUserConversations: builder.query({
-      query: (userId:string) =>
-        `conversations/getAllUserConversations?id=${userId}`,
-      providesTags: ["getAllUserConversations"],
     }),
     conversationAlreadyExist: builder.query({
       query: (ids:{one:string, two:string}) =>
@@ -270,7 +275,7 @@ export const apiSlice = createApi({
         method: "POST",
         body: message,
       }),
-      invalidatesTags: ["getAllMessagesPerConversation"],
+      invalidatesTags: ["getAllMessagesPerConversation", "getAllUserConversations"],
     }),
     removeMessage: builder.mutation({
       query: (id:string) => ({
@@ -284,6 +289,14 @@ export const apiSlice = createApi({
         url: `messages/editMessage`,
         method: "POST",
         body: message
+      }),
+      invalidatesTags: ["getAllMessagesPerConversation"],
+    }),
+    markAsRead: builder.mutation({
+      query: (messages:IMessage[]) => ({
+        url: `messages/markAsRead`,
+        method: "POST",
+        body: messages
       }),
       invalidatesTags: ["getAllMessagesPerConversation"],
     }),
@@ -336,4 +349,5 @@ export const {
   useCreateMessageMutation,
   useRemoveMessageMutation,
   useUpdateMessageMutation,
+  useMarkAsReadMutation,
 } = apiSlice;

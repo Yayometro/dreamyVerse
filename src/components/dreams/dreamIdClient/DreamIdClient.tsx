@@ -8,6 +8,7 @@ import DreamsGenerator from "../dreamsGenerator/DreamsGenerator";
 import { MdClose } from "react-icons/md";
 import { useGetDreamQuery } from "@/redux/features/api/apiSlice";
 import SkeletonCard from "@/components/skeletons/card/CardSkeleton";
+import NoFiles from "@/components/NoData/NoFiles/NoFiles";
 
 function DreamIdClient({ dreamId }: { dreamId: string }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -52,11 +53,9 @@ function DreamIdClient({ dreamId }: { dreamId: string }) {
   if (isError) {
     console.log(error);
     return (
-      <div className=" w-full w-max-[1200px] flex justify-center items-center">
-        <p className=" text-base">
-          No dream loaded from server. Please reload the page and try again
-          later... 🤕
-        </p>
+      <div className=" w-full h-full w-max-[1200px] flex justify-center items-center">
+        <NoFiles message="No dream loaded from server. Please reload the page and try again
+            later... 🤕" />
       </div>
     );
   }
@@ -64,11 +63,9 @@ function DreamIdClient({ dreamId }: { dreamId: string }) {
   return (
     <div className="w-full h-full">
       {!data ? (
-        <div className=" w-full w-max-[1200px] flex justify-center items-center">
-          <p className=" text-base">
-            No dream loaded from server. Please reload the page and try again
-            later... 🤕
-          </p>
+        <div className=" w-full h-full w-max-[1200px] flex justify-center items-center">
+          <NoFiles message="No dream loaded from server. Please reload the page and try again
+            later... 🤕" />
         </div>
       ) : (
         <div className="dream-container-id w-full max-w-5xl flex justify-center items-start lg:pl-4">

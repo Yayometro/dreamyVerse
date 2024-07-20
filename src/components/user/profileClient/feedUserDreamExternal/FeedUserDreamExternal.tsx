@@ -6,6 +6,7 @@ import SkeletonCard from "@/components/skeletons/card/CardSkeleton";
 import { useGetHomeFeedQuery, useGetUserDreamsQuery } from "@/redux/features/api/apiSlice";
 import { IDreamDocument } from "../../../../../dreamyVerse";
 import useUserNavigator from "@/hooks/useUserNavigatorId";
+import NoData from "@/components/NoData/NoData";
 
 function FeedUserDreamsExternal({id}:{id:string}) {
   const [posts, setPosts] = useState<[] | IDreamDocument[]>([])
@@ -41,16 +42,10 @@ function FeedUserDreamsExternal({id}:{id:string}) {
 
   return (
     <div className="w-full  max-w-5xl flex justify-center items-center border-1s border-red-400s">
-      <div className="cardsContainer max-w-2xl flex flex-col gap-4">
+      <div className="cardsContainer w-full max-w-2xl flex flex-col justify-start items-center gap-4">
         {posts.length <= 0 ? (
-          <div className=" flex flex-col gap-4">
-            <div className="flex flex-col gap-2">
-              <h1 className="text-2xl"> No post here to see 🤔...</h1>
-              <p className=" text-lg">Follow some user, dream or post to see new publications here...</p>
-            </div>
-          {/* {[1, 2, 3, 4, 5].map((skeleton) => (
-            <SkeletonCard key={`skeleton-loader-fc-${skeleton}`} />
-          ))} */}
+          <div className=" w-full h-full">
+            <NoData title="No post here to see..." message="The user hasn't created any dreams yet, tell the user to create one 😉" />
           </div>
         ) : (
           data.data.map((dream: any) => (

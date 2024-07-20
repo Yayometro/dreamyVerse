@@ -1,7 +1,7 @@
 // src/components/messages/messagesCenter/ConversationView.jsx
 import React, { useContext, useEffect, useState } from "react";
-import { IConversation, IMessage, IUserDocument, MessageContextType } from "../../../../dreamyVerse";
-import { useGetAllMessagesPerConversationQuery } from "@/redux/features/api/apiSlice";
+import { IConversation, IdInterfaceMongoo, IMessage, IUserDocument, MessageContextType } from "../../../../dreamyVerse";
+import { useGetAllMessagesPerConversationQuery, useMarkAsReadMutation } from "@/redux/features/api/apiSlice";
 import NoData from "@/components/NoData/NoData";
 import { ScrollShadow, Skeleton } from "@nextui-org/react";
 import NoFiles from "@/components/NoData/NoFiles/NoFiles";
@@ -15,7 +15,7 @@ const ConversationView = ({
 }: {
   conversation: IConversation;
 }) => {
-  const { data, isError, isLoading, error } =
+  const { data, isError, isLoading, error, refetch } =
     useGetAllMessagesPerConversationQuery(conversation._id as string);
   const [messages, setMessages] = useState<IMessage[] | []>([]);
   const [updateComp, setUpdateComp] = useState<number>(0);
@@ -25,10 +25,15 @@ const ConversationView = ({
     throw new Error("SomeComponent must be used within a MessageProvider");
   }
   const {
-    unreadMessages
+    unreadMessagesActions,
+    removeEditedMessage,
+    removeRemovedMessage,
+    removeUnreadMessage,
+    removeMarkedVisibleMessage
   } = context as MessageContextType;
-  //Get all messages from the current conversation
+  const [markedManyMessagesAsReaded] = useMarkAsReadMutation()
 
+  //Get all messages from the current conversation
     const {userId} = useUserNavigator() 
     console.log("ConversationView se renderizó otra vez jeje ")
 
@@ -45,19 +50,41 @@ const ConversationView = ({
         setMessages(recentOrderMsg);
       }
     }
-    // if(unreadMessages){
-    //   console.log("unreadMessages", unreadMessages)
-    //   const messagesOfThisConversation = unreadMessages.filter((messages:IMessage) => messages.conversation === conversation._id)
-    //   console.log(messagesOfThisConversation)
-    //   // let updatedMessages = [...messagesOfThisConversation as IMessage[], ...messages].sort((a, b) => {
-    //   //   const dateA = new Date(a.createdAt || 0);
-    //   //   const dateB = new Date(b.createdAt || 0);
-    //   //   return dateB.getTime() - dateA.getTime();
-    //   // });
-    //   let updatedMessages = [...messagesOfThisConversation as IMessage[], ...messages];
-    //   setMessages(prevMessages => [...unreadMessages, ...prevMessages])
-    // }
-  }, [data, unreadMessages, conversation._id]);
+  }, [data]);
+
+  useEffect(() => {
+    
+    if (unreadMessagesActions.unread.length > 0 && unreadMessagesActions.unread.some(msg => msg.conversation === conversation._id)) {
+      const unreadMessagesHere = unreadMessagesActions.unread.filter(msg => msg.conversation === conversation._id);
+      handleMarked(unreadMessagesHere)
+      removeUnreadMessage(unreadMessagesHere, conversation._id as IdInterfaceMongoo)
+    }
+    if(unreadMessagesActions.edited.length > 0 && unreadMessagesActions.edited.some(msg => msg.conversation === conversation._id)){
+      const editedMessagesHere = unreadMessagesActions.edited.filter(msg => msg.conversation === conversation._id);
+      removeEditedMessage(editedMessagesHere, conversation._id as IdInterfaceMongoo)
+    }
+    if(unreadMessagesActions.removed.length > 0 && unreadMessagesActions.removed.some(msg => msg.conversation === conversation._id)){
+      const removedMessagesHere = unreadMessagesActions.removed.filter(msg => msg.conversation === conversation._id);
+      removeRemovedMessage(removedMessagesHere, conversation._id as IdInterfaceMongoo)
+    }
+    if(unreadMessagesActions.markedVisible.length > 0 && unreadMessagesActions.markedVisible.some(msg => msg.conversation === conversation._id)){
+      const markedVisibleMessagesHere = unreadMessagesActions.markedVisible.filter(msg => msg.conversation === conversation._id);
+      removeMarkedVisibleMessage(markedVisibleMessagesHere, conversation._id as IdInterfaceMongoo)
+    }
+    refetch()
+  }, [unreadMessagesActions, conversation._id, refetch]);
+
+  const handleMarked = async (array:IMessage[]) => {
+    try{
+      const answer = await markedManyMessagesAsReaded(array)
+      if(!answer || !answer.data || answer.error){
+        console.log(answer)
+      }
+      // console.log(answer)
+    } catch(e){
+      console.log(e)
+    }
+  }
 
   if (isError) {
     console.log(error);

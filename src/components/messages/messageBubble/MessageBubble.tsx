@@ -10,9 +10,7 @@ import {
   PopoverTrigger,
   Spinner,
 } from "@nextui-org/react";
-import { MdInfo, MdMoreHoriz } from "react-icons/md";
-import { useRemoveMessageMutation } from "@/redux/features/api/apiSlice";
-import notifier from "@/helpers/notifier";
+import { MdInfo} from "react-icons/md";
 import ActionsBubbleMessageSections from "../actionsBubbleMessageSections/ActionsBubbleMessageSections";
 import getTimeDifference from "@/helpers/getTimeDifference";
 import useUserNavigator from "@/hooks/useUserNavigatorId";
@@ -38,6 +36,7 @@ function MessageBubble({
           <GeneralAvatar
             src={user.avatar || ""}
             className="w-full h-full rounded-full"
+            username={user.username}
           />
         </div>
       )}
@@ -151,6 +150,8 @@ function MessageBubble({
           <GeneralAvatar
             src={user.avatar || ""}
             className="w-full h-full rounded-full"
+            username={user.username}
+
           />
         </div>
       )}

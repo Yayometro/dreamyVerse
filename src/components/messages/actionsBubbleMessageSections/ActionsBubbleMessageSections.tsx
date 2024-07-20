@@ -7,15 +7,10 @@ import {
 } from "@/redux/features/api/apiSlice";
 import {
   Button,
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-  Spinner,
 } from "@nextui-org/react";
 import React, { useState } from "react";
-import { MdDelete, MdInfo, MdMoreHoriz } from "react-icons/md";
 import useUserNavigator from "@/hooks/useUserNavigatorId";
-import { IMessage, IUserDocument } from "../../../../dreamyVerse";
+import { IMessage, removeForHandleType } from "../../../../dreamyVerse";
 
 function ActionsBubbleMessageSections({ message }: { message: IMessage }) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -55,6 +50,7 @@ function ActionsBubbleMessageSections({ message }: { message: IMessage }) {
       }
       const confirmation = await updateMessage({
         ...message,
+        type: "RemovedForMyselfOnly" as removeForHandleType,
         removed: {
           ...message.removed,
           for: [...(message.removed.for ?? []), userId],
@@ -98,6 +94,7 @@ function ActionsBubbleMessageSections({ message }: { message: IMessage }) {
       }
       const confirmation = await updateMessage({
         ...message,
+        type: mode === "me" ? "RestoredForMyself" : "RestoredForTheOther" as removeForHandleType,
         removed: {
           ...message.removed,
           for: updatedArray,
@@ -134,6 +131,7 @@ function ActionsBubbleMessageSections({ message }: { message: IMessage }) {
       ];
       const confirmation = await updateMessage({
         ...message,
+        type: "RemoveForTheOtherOnly" as removeForHandleType,
         removed: {
           ...message.removed,
           for: updatedArray,

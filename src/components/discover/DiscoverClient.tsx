@@ -8,6 +8,7 @@ import DreamsCards from "../dreams/dreamsCards/DreamsCards";
 import LeftPanel from "../leftPanel/LeftPanel";
 import { useSession } from "next-auth/react";
 import useUserNavigator from "@/hooks/useUserNavigatorId";
+import NoData from "../NoData/NoData";
 
 function DiscoverClient() {
   const [publicDreams, setPublicDreams] = useState<[] | IDreamDocument>([]);
@@ -24,14 +25,6 @@ function DiscoverClient() {
   }, [data]);
 
   if (isError) {
-    // if ("data" in error && error?.data) {
-    //   if ("error" in error?.data) {
-    //     setErrorMessage(error?.data?.error);
-    //   }
-    //   if ("message" in error?.data) {
-    //     setErrorMessage(error?.data?.message);
-    //   }
-    // }
     if (typeof data.error === "object") {
       if ("error" in data.error) {
         setErrorMessage(data.error.error);
@@ -67,9 +60,9 @@ function DiscoverClient() {
               🌜 Discover the dreams of the world 🌛
             </p>
             {!data?.data
-              ? [1, 2, 3, 4, 5].map((skeleton) => (
-                  <SkeletonCard key={`skeleton-loader-fc-${skeleton}`} />
-                ))
+              ? (<div className="w-full h-full">
+                <NoData message="Ups... No data visible. Please try again later... 🤕"/>
+              </div>)
               : data.data.map((dream: any) => (
                   <DreamsCards
                     key={`dreamCardIdFeedPublic-${dream._id}`}

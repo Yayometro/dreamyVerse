@@ -9,6 +9,7 @@ import GetUsersFollowsBtn from "@/components/buttons/follows/getUsersFollows/Get
 import GetUserDreamsLengthBtn from "@/components/buttons/follows/getDreamsOfUserBtn/GetUserDreamsLengthBtn";
 import { IUserDocument } from "../../../../../dreamyVerse";
 import useUserNavigator from "@/hooks/useUserNavigatorId";
+import FollowUserBtn from "@/components/buttons/followUserBtn/FollowUserBtn";
 
 function ProfileHeaderExternal({ user }: { user: IUserDocument }) {
   const { userId } = useUserNavigator();
@@ -23,16 +24,17 @@ function ProfileHeaderExternal({ user }: { user: IUserDocument }) {
             radius="lg"
             className=" w-full max-w-24s max-w-44 w-[100px]s h-[100px] sm:w-[200px] sm:h-[200px]"
             isBordered={true}
+            username={user.username}
           />
         </div>
         <div className="information-section flex flex-col gap-3 sm:gap-4 items-start justify-start">
-          <div className="info-sec-top w-full flex gap-2 sm:gap-4 justify-start">
+          <div className="info-sec-top w-full flex items-center gap-2 sm:gap-4 justify-start">
             <p className="text-xl sm:text-3xl font-semibold">
               @{!user.username ? "No username..." : user.username}
             </p>
-            {userId === user._id ? <EditMyProfile user={user} /> : "" }
+            {userId === user._id ? <EditMyProfile user={user} /> : <FollowUserBtn user={user} styles=" py-0.5 px-1-5 text-blue-500 border-1 border-blue-500 rounded-lg"/> }
           </div>
-          <div className="info-sec-body w-full flex flex-col gap-2 items-start">
+          <div className="info-sec-body w-full flex flex-col gap-2 items-start ">
             <div className="flex gap-4 items-center justify-start">
               <p className={descriptionPs}>{user?.name || "No name"}</p>
               <p className={descriptionPs}>{user?.lastName || "No lastname"}</p>

@@ -47,11 +47,11 @@ function NotificationCenter({
   const handleNotificationClicked = async (notification: INotification) => {
     if(notification.action){
       handleClose(false)
-      router.push(`${notification.action}`)
-      return null
+      router.push(notification.action.startsWith('/') ? notification.action : `/${notification.action}`);
+    return null;
     }
     handleClose(false)
-    router.push(`${notification.type === "dream" ? "dashboard/dreams" : notification.type === "user" ? "dashboard/profile" : ""
+    router.push(`/${notification.type === "dream" ? "dashboard/dreams" : notification.type === "user" ? "dashboard/profile" : ""
   }/${notification.redirectionalId}`)
   }
 

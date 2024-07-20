@@ -4,6 +4,7 @@ import { Avatar } from '@nextui-org/react'
 import { useSession } from 'next-auth/react'
 import React, { useEffect, useState } from 'react'
 import { IUserDocument } from '../../../../dreamyVerse'
+import { useRouter } from 'next/navigation'
 
 function MyGeneralAvatar({
     className,
@@ -26,9 +27,10 @@ function MyGeneralAvatar({
             setUser(session.user.fullUser as IUserDocument)
         }
     }, [session])
-    
+    const router = useRouter()
   return (
     <Avatar 
+    onClick={() =>router.push(`/dashboard/profile/${user?.username}`)}
     src={user?.avatar || "/assets/user/user-non-profile.jpg"}
     size={size}
     className={className}

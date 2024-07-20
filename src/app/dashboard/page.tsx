@@ -11,7 +11,7 @@ async function Dashboard() {
     }
         
   return (
-    <div className='general-dashboard-container w-full h-screen border-2s border-red-600s lg:px-4 lg:pt-6'>
+    <div className='general-dashboard-container w-full h-full lg:px-4 lg:pt-6'>
       <DashboardClient />
     </div>
   )

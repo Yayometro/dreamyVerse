@@ -10,13 +10,14 @@ import GeneralAvatar from "../generalAvtar/GeneralAvtara";
 function UserFollowCard({ user, link }: { user: IUserDocument; link: string }) {
   const router = useRouter();
   return (
-    <div className=" cursor-pointer w-full bg-slate-100 dark:bg-slate-900 rounded-lg flex justify-start items-center py-1.5 px-2 gap-2 hover:bg-slate-200 dark:hover:bg-slate-200 ">
+    <div className=" cursor-pointer w-full text-black dark:text-white bg-slate-100 dark:bg-slate-900 rounded-lg flex justify-start items-center py-1.5 px-2 gap-2 hover:bg-slate-200 dark:hover:bg-slate-800 ">
       <div
         className="avatar-container cursor-pointer"
         onClick={() => router.push(link || `/dashboard/profile/${user.username}`)}
       >
         <GeneralAvatar
           src={user.avatar as string}
+          username={user.username}
           size="md"
           radius="full"
         />

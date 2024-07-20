@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import SkeletonCard from "@/components/skeletons/card/CardSkeleton";
 import { useGetHomeFeedQuery, useGetUserDreamsQuery } from "@/redux/features/api/apiSlice";
 import { IDreamDocument } from "../../../../../dreamyVerse";
+import NoData from "@/components/NoData/NoData";
 
 function FeedUserDreams() {
   const { data: session } = useSession();
@@ -30,9 +31,11 @@ function FeedUserDreams() {
   }, [data])
 
   if (isError) {
+    console.log(error)
     return (
       <div className="w-full md:w-[450px] lg:w-[600px] xl:w-[1000px] borderñ border-red-400s flex flex-col gap-2">
         <p>Error:</p>
+        <p>An unexpected error happen. Pleas etry again later</p>
       </div>
     );
   }
@@ -48,17 +51,11 @@ function FeedUserDreams() {
   }
 
   return (
-    <div className="w-full  max-w-5xl flex justify-center items-center border-1s border-red-400s">
-      <div className="cardsContainer max-w-2xl flex flex-col gap-4">
+    <div className="w-full h-full  max-w-5xl flex justify-center items-center border-1s border-red-400s">
+      <div className="cardsContainer w-full h-full max-w-2xl flex flex-col gap-4">
         {posts.length <= 0 ? (
-          <div className=" flex flex-col gap-4">
-            <div className="flex flex-col gap-2">
-              <h1 className="text-2xl"> No post here to see 🤔...</h1>
-              <p className=" text-lg">Follow some user, dream or post to see new publications here...</p>
-            </div>
-          {/* {[1, 2, 3, 4, 5].map((skeleton) => (
-            <SkeletonCard key={`skeleton-loader-fc-${skeleton}`} />
-          ))} */}
+          <div className="w-full h-full py-[30px]">
+             <NoData title="¡No dreams here!" message={"Create your first dream now! 🤓"} />
           </div>
         ) : (
           data.data.map((dream: any) => (

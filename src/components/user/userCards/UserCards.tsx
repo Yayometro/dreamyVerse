@@ -11,7 +11,7 @@ export const UserCard = ({father}: {father: IUserDocument}) => {
   const fetcher = fetcherFetch()
 
   return (
-    <Link href={`${fetcher.getFrontEndURL()}/profile/${father.username}`}>
+    <Link href={`dashboard/profile/${father.username}`}>
     <Card className="max-w-[200px] border-none bg-transparent cursor-pointer hover:underline">
       <CardHeader className="justify-between">
         <div className="flex gap-3">

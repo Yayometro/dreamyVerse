@@ -34,7 +34,6 @@ import NotificationBtn from "../buttons/notificationCenterBtn/NotificationBtn";
 import useUserNavigator from "@/hooks/useUserNavigatorId";
 import socket from "@/lib/socket";
 import MessageBtn from "../buttons/messageBtn/MessageBtn";
-import MessageProvider from "@/providers/messages/MessageProvider";
 
 function Navbar() {
   //session
@@ -173,9 +172,7 @@ function Navbar() {
         </div>
         <div className="navbar-col-end-items h-[40%] w-full flex flex-col items-center lg:items-start justify-end cursor-pointer">
           <li className=" justify-center  md:items-end py-[10px] lg:justify-start hiddedMedia">
-            <MessageProvider>
-              <MessageBtn />
-            </MessageProvider>
+            <MessageBtn />
           </li>
           <li className=" justify-center  md:items-end py-[10px] lg:justify-start hiddedMedia">
             <NotificationBtn />
@@ -288,12 +285,10 @@ function Navbar() {
               )}
             </div>
             <div className="w-[40px] h-full">
-              <NotificationBtn />
+                <NotificationBtn />
             </div>
             <div className="w-[40px] h-full">
-              <MessageProvider>
                 <MessageBtn />
-              </MessageProvider>
             </div>
           </div>
         </div>

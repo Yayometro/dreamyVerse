@@ -105,11 +105,11 @@ export interface IMessage extends Document {
   conversation: mongoose.Types.ObjectId;
   content: {
     message: string;
-    media?: string;
+    media?: string | null
   };
   read: boolean,
   removed: {
-    for: mongoose.Types.ObjectId[] | [];
+    for: mongoose.Types.ObjectId[] | string[] | [];
     forAll: boolean;
   };
   createdAt?: string | Date
@@ -136,10 +136,40 @@ export interface MessageContextType {
   setCurrentConversation: React.Dispatch<
     React.SetStateAction<IConversation | null>
   >;
-  unreadMessages: any[];
-  setUnreadMessages: React.Dispatch<React.SetStateAction<any[]>>;
+  // unreadMessages: IMessage[];
+  // setUnreadMessages: React.Dispatch<React.SetStateAction<any[]>>;
+  unreadMessagesActions: IUnreadMessageActions,
+  setUnreadMessagesActions: React.Dispatch<SetStateAction<IUnreadMessageActions>>
+  addUnreadMessage: (message: IMessage) => void
+  addEditedMessage: (message: IMessage) => void
+  addRemovedMessage: (message: IMessage) => void
+  addMarkedAsVisibleMessage: (message: IMessage) => void
+  removeUnreadMessage: (messages: IMessage[], conversationId: IdInterfaceMongoo) => void
+  removeEditedMessage: (messages: IMessage[], conversationId: IdInterfaceMongoo) => void
+  removeRemovedMessage: (messages: IMessage[], conversationId: IdInterfaceMongoo) => void
   handleConversationClick: (conversation: IConversation) => void;
+  removeMarkedVisibleMessage: (messages: IMessage[], conversationId: IdInterfaceMongoo) => void
   handleBackClick: () => void;
 }
 
+declare module "*.mp3" {
+  const src: string;
+  export default src;
+}
+
 export type IdInterfaceMongoo = mongoose.Types.ObjectId
+export type actionSocketMessage = "newMessage" | "removeFor" | "removeForAll" | "editContent" | "markedAsRead" | "visibleAgain"
+export type removeForHandleType = "RemoveForTheOtherOnly" | "RestoredForTheOther" | "RemovedForMyselfOnly" | "RestoredForMyself"
+
+export interface MessageSocketObject {
+  iMessage: IMessage,
+  action: actionSocketMessage,
+  message: string
+}
+
+export interface IUnreadMessageActions {
+  unread: IMessage[],
+  edited: IMessage[],
+  removed: IMessage[],
+  markedVisible: IMessage[],
+}

@@ -42,6 +42,7 @@ function MiniUserItemList({
         isBordered={aIsBordered}
         radius={aRadius}
         color={aColor}
+        username={user.username}
       />
       <p className="text-tiny">{user.username}</p>
     </div>
