@@ -1,7 +1,5 @@
 import React from "react";
 import Lottie from "lottie-react";
-import animationData from "../../../public/noData/NoData.json"; // Importa el JSON directamente
-import animationDataDark from "../../../public/noData/noDataDark.json"; // Importa el JSON directamente
 import zeroDataViolet from "../../../public/noData/zeroFilesViolet.json"; // Importa el JSON directamente
 import useThemeCustom from "@/hooks/useTheme";
 
