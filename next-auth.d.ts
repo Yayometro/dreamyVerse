@@ -38,7 +38,7 @@ interface DefaultUser {
     };
   }
 
-  
+  declare module '*.mp3';
 
   
 //   interface Email {

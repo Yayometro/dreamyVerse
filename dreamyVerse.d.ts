@@ -173,3 +173,5 @@ export interface IUnreadMessageActions {
   removed: IMessage[],
   markedVisible: IMessage[],
 }
+
+declare module '*.mp3';

@@ -1,21 +1,11 @@
 import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
-import GitHubProvider from "next-auth/providers/github";
-import axios from "axios";
 //TYPES
-import type { NextApiRequest, NextApiResponse } from "next";
-import type { CredentialsProviderType } from "next-auth/providers/credentials";
-import {
-  CredentialsConfig,
-  CredentialInput,
-} from "next-auth/providers/credentials";
 import { IUser } from "@/types/mongoModels";
-import { ApiResponseDv } from "@/types/responsesTypes";
-import { pages } from "next/dist/build/templates/app-page";
 import { Account, Profile, User } from "next-auth";
-import { AdapterUser } from "next-auth/adapters";
 import fetcherFetch from "@/helpers/fetcher";
+
 
 //
 
@@ -24,7 +14,7 @@ console.log(routeApiBase);
 
 const fetcher = fetcherFetch();
 
-export const authOptions = {
+const authOptions = {
   providers: [
     CredentialsProvider({
       name: "Credentials",

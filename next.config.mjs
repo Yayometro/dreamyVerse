@@ -17,9 +17,9 @@ const nextConfig = {
         'scontent-qro1-2.xx.fbcdn.net'
       ],
     },
-    webpack(config, options) {
+    webpack(config) {
       config.module.rules.push({
-        test: /\.(mp3)$/,
+        test: /\.(mp3|wav)$/,
         use: {
           loader: 'file-loader',
           options: {
