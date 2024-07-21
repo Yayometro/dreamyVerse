@@ -5,7 +5,6 @@ import { MessageContext } from "@/providers/messages/MessageProvider";
 import { BreadcrumbItem, Breadcrumbs, Button } from "@nextui-org/react";
 import React, { useContext } from "react";
 import { FaAngleLeft } from "react-icons/fa6";
-import { IoMdReturnLeft } from "react-icons/io";
 
 function MessageHistoryNavigator() {
   const context = useContext(MessageContext);

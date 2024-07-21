@@ -1,3 +1,4 @@
+"use client"
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { IFollowDocument, IUserDocument } from "../../../../dreamyVerse";
 import { Input, Spacer, Spinner } from "@nextui-org/react";

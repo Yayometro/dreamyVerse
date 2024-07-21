@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect, useState } from "react";
 import { Textarea, Spacer } from "@nextui-org/react";
 import { TiDeleteOutline } from "react-icons/ti";

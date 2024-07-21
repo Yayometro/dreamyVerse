@@ -1,7 +1,5 @@
 "use client"
 import { useTheme } from 'next-themes';
-import React from 'react'
-
 function useThemeCustom() {
     // const [currentTheme, setCu]
     const { theme, setTheme } = useTheme();

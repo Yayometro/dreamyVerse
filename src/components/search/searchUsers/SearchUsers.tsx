@@ -1,3 +1,5 @@
+"use client";
+
 import UserFollowCard from "@/components/user/userFollowCard/UserFollowCard";
 import fetcherFetch from "@/helpers/fetcher";
 import { Input, Spinner } from "@nextui-org/react";

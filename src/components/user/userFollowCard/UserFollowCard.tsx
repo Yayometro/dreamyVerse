@@ -1,3 +1,5 @@
+"use client";
+
 import { User } from "@nextui-org/react";
 import React from "react";
 import { IUserDocument } from "../../../../dreamyVerse";

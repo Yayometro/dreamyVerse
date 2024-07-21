@@ -1,3 +1,5 @@
+"use client";
+
 // import useUserNavigator from '@/hooks/useUserNavigatorId';
 // import socket from '@/lib/socket';
 import React, { useEffect, useState } from "react";

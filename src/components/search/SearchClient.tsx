@@ -1,3 +1,5 @@
+"use client";
+
 import fetcherFetch from "@/helpers/fetcher";
 import { Input, Spacer } from "@nextui-org/react";
 import React, { useEffect, useState } from "react";

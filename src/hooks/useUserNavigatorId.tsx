@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { IUserDocument } from "../../dreamyVerse";
@@ -18,7 +20,7 @@ const useUserNavigator = () => {
         }
       }, [session?.user?.fullUser]);
 
-    console.log("first")
+    // console.log("first")
 
     return {
         user,

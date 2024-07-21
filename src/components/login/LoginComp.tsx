@@ -33,7 +33,7 @@ function LoginComp() {
     if (email) {
       notifier("ok", `${email} was created successfully 🤓`);
     }
-  }, []);
+  }, [email]);
   //Loader
   quantum.register();
   //

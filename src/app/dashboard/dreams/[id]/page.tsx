@@ -1,7 +1,5 @@
 import DreamIdClient from "@/components/dreams/dreamIdClient/DreamIdClient";
-import fetcherFetch from "@/helpers/fetcher";
 import React from "react";
-import { IDreamDocument } from "../../../../../dreamyVerse";
 import LeftPanel from "@/components/leftPanel/LeftPanel";
 
 async function DreamId({ params }: { params: { id: string } }) {

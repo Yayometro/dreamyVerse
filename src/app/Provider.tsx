@@ -8,7 +8,6 @@ interface ISession {
     }
   }
 
-// export const AuthProvider = ({children , session}: {children:React.ReactNode, session: Session | null}
 const AuthProvider = ({children}: {children:React.ReactNode}
   ) => {
     return <SessionProvider>

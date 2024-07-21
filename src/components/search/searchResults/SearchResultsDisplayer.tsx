@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { IDreamDocument, IUserDocument } from "../../../../dreamyVerse";
 import UserFollowCard from "@/components/user/userFollowCard/UserFollowCard";

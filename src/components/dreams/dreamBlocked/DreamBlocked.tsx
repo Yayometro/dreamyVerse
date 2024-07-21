@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from "react";
 import { IUserDocument } from "../../../../dreamyVerse";
 import { useCreateNotificationMutation } from "@/redux/features/api/apiSlice";

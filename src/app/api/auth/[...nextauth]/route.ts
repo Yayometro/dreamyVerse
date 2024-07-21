@@ -3,14 +3,13 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 //TYPES
 import { IUser } from "@/types/mongoModels";
-import { Account, Profile, User } from "next-auth";
+import { User } from "next-auth";
 import fetcherFetch from "@/helpers/fetcher";
 
 
 //
 
 const routeApiBase: string | undefined = process.env.API_ROUTE;
-console.log(routeApiBase);
 
 const fetcher = fetcherFetch();
 
@@ -63,7 +62,7 @@ const authOptions = {
     //Once authorize return the obj, the obj will be saved in the token  here in a new variable.user
     async signIn({ account, profile, user }: any): Promise<any> {
       if (account.provider === "credentials") {
-        console.log(account, profile, user)
+        // console.log(account, profile, user)
         if (!user) return null;
         return true;
       }
@@ -100,7 +99,7 @@ const authOptions = {
       }
     },
     async jwt({ token, user, account }: any) {
-      console.log(token, user, account)
+      // console.log(token, user, account)
       if (user) {
         if (account.type === "credentials") {
           console.log(token, user, account)
@@ -110,19 +109,19 @@ const authOptions = {
           token.fullUser = user;
         }
         if (account.provider === "google") {
-          console.log(token, user, account)
+          // console.log(token, user, account)
           token.fullUser = user.fullUser || account.fullUser;
         }
       }
       return token;
     },
     async session({ session, token }: any) {
-      console.log(token, session)
+      // console.log(token, session)
       if (token?.fullUser) {
-        console.log(token, session)
+        // console.log(token, session)
         session.user.fullUser = token.fullUser;
       } else if (session.user) {
-        console.log(token, session)
+        // console.log(token, session)
         const getUser = await fetcher.get(
           `user/getUser?mail=${session.user.email}`
         );

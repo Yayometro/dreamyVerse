@@ -1,3 +1,4 @@
+"use client"
 import React from "react";
 import Lottie from "lottie-react";
 import zeroDataViolet from "../../../public/noData/zeroFilesViolet.json"; // Importa el JSON directamente

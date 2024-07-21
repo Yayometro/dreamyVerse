@@ -1,3 +1,5 @@
+"use client";
+
 import { Button, Spinner } from "@nextui-org/react";
 import React, { useEffect, useState } from "react";
 import {

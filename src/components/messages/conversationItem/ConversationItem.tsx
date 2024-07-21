@@ -126,7 +126,7 @@ function ConversationItem({ conversation }: { conversation: IConversation }) {
             </Button>
           </PopoverTrigger>
           <PopoverContent>
-            <div className="p-0.5">
+            <div className="p-0.5 w-[200px]">
               <div className="text-small font-bold flex flex-col justify-start items-center gap-2">
                 Unseen message changes:{" "}
               </div>

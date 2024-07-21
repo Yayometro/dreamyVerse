@@ -1,3 +1,5 @@
+"use client";
+
 // src/components/messages/messagesCenter/ConversationView.jsx
 import React, { useContext, useEffect, useState } from "react";
 import { IConversation, IdInterfaceMongoo, IMessage, IUserDocument, MessageContextType } from "../../../../dreamyVerse";

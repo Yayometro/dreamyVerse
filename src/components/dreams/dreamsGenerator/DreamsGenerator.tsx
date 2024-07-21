@@ -15,7 +15,6 @@ import {
   Textarea,
   DatePicker,
   Switch,
-  Tooltip,
   Select,
   SelectItem,
   Popover,
@@ -25,26 +24,21 @@ import {
   Spinner,
 } from "@nextui-org/react";
 import { MdAddCircle, MdMessage } from "react-icons/md";
-import { RiFileUploadLine } from "react-icons/ri";
-import { IDreamDocument, INotification, IUserDocument } from "../../../../dreamyVerse";
-import { useSession } from "next-auth/react";
+import { IDreamDocument, IUserDocument } from "../../../../dreamyVerse";
 import notifier from "@/helpers/notifier";
-import { parseDate, getLocalTimeZone, fromDate } from "@internationalized/date";
+import { parseDate } from "@internationalized/date";
 import { format } from "date-fns";
 import { CldUploadWidget } from "next-cloudinary";
 
 //
-import { FaQuestionCircle, FaRegQuestionCircle } from "react-icons/fa";
+import { FaRegQuestionCircle } from "react-icons/fa";
 import PrivacyDefaultTooltip from "@/components/tooltip/Privacy/PrivacyDefaultTooltip";
-import fetcherApi from "@/helpers/fetcher";
 import { pulsar } from "ldrs";
-import { useAppDispatch, useAppSelector } from "@/redux/hook";
 import {
   useCreateNewUserDreamMutation,
   useCreateNotificationMutation,
   useEditDreamMutation,
 } from "@/redux/features/api/apiSlice";
-import { IUser } from "@/types/mongoModels";
 import PopOverDreamGeneratorImg from "@/components/popOvers/Informatives/PopOverDreamGeneratorImg";
 import PopAboutPrivacityDream from "@/components/popOvers/Informatives/PopAboutPrivacityDream";
 import PopOverWantToTagPeople from "@/components/popOvers/Informatives/PopOverWantToTagPeople";
@@ -55,7 +49,6 @@ import InfoTagOutsideApp from "@/components/popOvers/Informatives/InfoTagOutside
 import InputTagPeopleOutside from "@/components/inputs/inputTagPeopleOutside/InputTagPeopleOutside";
 import UserFollowersSelctor from "@/components/inputs/friendsSelector/UserFollowersSelctor";
 import { useSearchParams } from "next/navigation";
-import useCreateNotification from "@/hooks/useCreateNotification";
 import useUserNavigator from "@/hooks/useUserNavigatorId";
 import { playNewDreamSound } from "@/helpers/soundsHelper";
 
@@ -79,7 +72,7 @@ function DreamsGenerator({
   //
   const [createNewDream] = useCreateNewUserDreamMutation();
   const [editDream] = useEditDreamMutation();
-  const [createNotification] = useCreateNotificationMutation()
+  const [createNotification] = useCreateNotificationMutation();
   //
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [isExpanedBtn, setIsExpandedBtn] = useState<boolean>(true);
@@ -113,21 +106,18 @@ function DreamsGenerator({
   const [isVisibleForFriends, setIsVisibleForFriends] = useState<boolean>(true);
   const [othersCanComment, setOthersCanComment] = useState<boolean>(true);
   const [othersCanShare, setOthersCanShare] = useState<boolean>(true);
-  
 
-  const {user, userId} = useUserNavigator()
+  const { user, userId } = useUserNavigator();
   const searchParams = useSearchParams();
   const qMessage = searchParams.get("qMessage");
   const qSetVisibilityFor: string | null =
     searchParams.get("qSetVisibilityFor");
-    
 
   useEffect(() => {
     if (userId) {
       setFormData({ ...formData, user: userId });
     }
   }, [userId]);
-
 
   useEffect(() => {
     if (onEditionDream) {
@@ -189,28 +179,33 @@ function DreamsGenerator({
           return null;
         }
         // Handling Request Notifications
-        if(qSetVisibilityFor){
+        if (qSetVisibilityFor) {
           const newNoti = {
             user: qSetVisibilityFor,
             type: "dream",
             redirectionalId: onEditionDream._id,
-            message: `The user ${(onEditionDream.user as IUserDocument).username} has accepted your request to see the private dream. Click here to see it! 😎`,
+            message: `The user ${
+              (onEditionDream.user as IUserDocument).username
+            } has accepted your request to see the private dream. Click here to see it! 😎`,
             read: false,
+          };
+          const responseNewNoti = await createNotification(newNoti);
+          if (!responseNewNoti) {
+            console.log(responseNewNoti);
+            notifier(
+              "error",
+              "Something went wrong creating the notifiction for this action. Please review the arguments and try again... 🤕"
+            );
+            console.log("no data...");
+            return null;
           }
-          const responseNewNoti = await createNotification(newNoti)
-          if(!responseNewNoti){
-            console.log(responseNewNoti)
-            notifier("error", "Something went wrong creating the notifiction for this action. Please review the arguments and try again... 🤕")
-            console.log("no data...")
-            return null
-          }
-          notifier("ok", "Access granted to user for this dream 😎")
+          notifier("ok", "Access granted to user for this dream 😎");
         }
         //confirmation
         notifier("ok", `${dream?.data?.message}`);
         cleanerForm();
         setIsLoading(false);
-        playNewDreamSound()
+        playNewDreamSound();
         dgOnClose();
         return null;
       }
@@ -223,7 +218,7 @@ function DreamsGenerator({
         notifier("ok", `${dream?.data?.message}`);
         cleanerForm();
         setIsLoading(false);
-        playNewDreamSound()
+        playNewDreamSound();
         dgOnClose();
       }
       setIsLoading(false);
@@ -469,15 +464,15 @@ function DreamsGenerator({
                 </div>
                 {qMessage || queryMessage ? (
                   <>
-                  <Divider className="my-2" />
-                  <div className=" w-full px-1.5 rounded-xl flex justify-center items-center text-sm text-blue-600 dark:text-orange-400 gap-2">
-                    <div className=" text-centers flex gap-2 flex-wrap">
-                      <b className=" w-fit flex gap-2">
-                        <MdMessage size={20} /> Message:{" "}
-                      </b>
-                      {qMessage || queryMessage}
+                    <Divider className="my-2" />
+                    <div className=" w-full px-1.5 rounded-xl flex justify-center items-center text-sm text-blue-600 dark:text-orange-400 gap-2">
+                      <div className=" text-centers flex gap-2 flex-wrap">
+                        <b className=" w-fit flex gap-2">
+                          <MdMessage size={20} /> Message:{" "}
+                        </b>
+                        {qMessage || queryMessage}
+                      </div>
                     </div>
-                  </div>
                   </>
                 ) : (
                   ""

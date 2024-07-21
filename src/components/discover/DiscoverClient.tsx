@@ -6,7 +6,6 @@ import { IDreamDocument } from "../../../dreamyVerse";
 import SkeletonCard from "../skeletons/card/CardSkeleton";
 import DreamsCards from "../dreams/dreamsCards/DreamsCards";
 import LeftPanel from "../leftPanel/LeftPanel";
-import { useSession } from "next-auth/react";
 import useUserNavigator from "@/hooks/useUserNavigatorId";
 import NoData from "../NoData/NoData";
 

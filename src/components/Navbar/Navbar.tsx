@@ -1,7 +1,6 @@
 "use client";
 import { signOut } from "next-auth/react";
 import React, { useEffect, useState } from "react";
-import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -12,10 +11,8 @@ import {
   MdLightMode,
   MdMenu,
   MdNightlight,
-  MdNotifications,
   MdOutlineExitToApp,
 } from "react-icons/md";
-import { BsFillSearchHeartFill, BsMoonStarsFill } from "react-icons/bs";
 
 import "./navbar.css";
 import "animate.css";
@@ -23,16 +20,10 @@ import DreamsGenerator from "../dreams/dreamsGenerator/DreamsGenerator";
 import useThemeCustom from "@/hooks/useTheme";
 
 //Redux
-import { useGetUserQuery } from "@/redux/features/api/apiSlice";
 
-import { setUser } from "@/redux/features/userSlice";
-import { useAppDispatch, useAppSelector } from "@/redux/hook";
-import { IUserDocument } from "../../../dreamyVerse";
-import notifier from "@/helpers/notifier";
 import SearchBtn from "../buttons/searchBtn/SearchBtn";
 import NotificationBtn from "../buttons/notificationCenterBtn/NotificationBtn";
 import useUserNavigator from "@/hooks/useUserNavigatorId";
-import socket from "@/lib/socket";
 import MessageBtn from "../buttons/messageBtn/MessageBtn";
 
 function Navbar() {
@@ -43,24 +34,7 @@ function Navbar() {
   const [addDreamOpen, setAddDreamOpen] = useState<boolean>(false);
   const [mounted, setMounted] = useState(false);
   const { theme, setTheme } = useThemeCustom();
-  const [isDreamsGeneratorOpen, setIsDreamsGeneratorOpen] =
-    useState<boolean>(true);
-  const [avatar, setAvatar] = useState<string>("");
   const { userId, user } = useUserNavigator();
-  // REDUX
-  const dispatch = useAppDispatch();
-
-  // const {data, isLoading, isError, error} = useGetUserQuery(session?.user?.email)
-
-  // console.log(session)
-  // if(data){
-  //   if(data?.data){
-  //     dispatch(setUser(data.data[0]))
-  //   }
-  // }
-  // if(error || isError){
-  //   notifier("error", `${error || "User not found on Navbar.tsx, critical error to fetch per User without Used._id"}`)
-  // }
 
   // THemes config
   useEffect(() => {
@@ -78,15 +52,6 @@ function Navbar() {
     setIsModalOpen(!isModalOpen);
   };
 
-  useEffect(() => {
-    if (userId) {
-      console.log(userId);
-      const resSocket = socket.emit("identify", userId);
-      console.log(resSocket);
-    }
-  }, [userId]);
-
-  console.log("first");
   return (
     <nav className="navbar w-full fixed flex flex-col items-center justify-center bottom-0  md:w-fit md:fixed md:top-0 z-[50]">
       {/* Ul from md to lg screens */}
