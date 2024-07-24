@@ -1,7 +1,8 @@
+"use client"
 import React from "react";
 import Navbar from "@/components/Navbar/Navbar";
 
-async function DashbaordLayout({ children }: { children: React.ReactNode }) {
+function DashbaordLayout({ children }: { children: React.ReactNode }) {
 
   return (
     <div className=" dark:bg-black bg-white text-black dark:text-white font-light w-full h-full relative">

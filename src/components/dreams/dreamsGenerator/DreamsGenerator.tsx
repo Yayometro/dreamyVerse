@@ -146,6 +146,14 @@ function DreamsGenerator({
     }
   }, [onEditionDream, qSetVisibilityFor]);
 
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      //For some reason the pulsar type get's an error on building so this verification is needed.
+      pulsar.register(); 
+    }
+  }, []);
+  
+
   //Handle input change
   const handleInputChange = (key: string, value: any) => {
     setFormData({ ...formData, [key as any]: value });
@@ -153,6 +161,10 @@ function DreamsGenerator({
 
   // Submiting to back
   const handleSubmit = async () => {
+    if (typeof window === 'undefined') {
+      console.log("Not running on window")
+      return;
+    }
     setIsLoading(true);
     // let temporalDream = formData
     if (!formData.user || formData.user === "") {
@@ -381,8 +393,7 @@ function DreamsGenerator({
         } as any)
     );
   };
-  // animation constant
-  pulsar.register();
+  
 
   return (
     <div className="">

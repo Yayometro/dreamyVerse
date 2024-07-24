@@ -18,7 +18,6 @@ import {
   useRemoveAllNotificationsMutation,
 } from "@/redux/features/api/apiSlice";
 import { useSocket } from "@/providers/notifications/NotificationsProvider";
-import { initializeSounds } from "@/helpers/soundsHelper";
 import notifier from "@/helpers/notifier";
 import { IUserDocument } from "../../../../dreamyVerse";
 
@@ -42,10 +41,6 @@ function NotificationBtn({
   );
   const [clearNotifications] = useRemoveAllNotificationsMutation();
   const { notifications, setNotifications } = useSocket();
-
-  useEffect(() => {
-    initializeSounds();
-  }, []);
 
   useEffect(() => {
     if (data) {

@@ -1,7 +1,6 @@
-import fetcherApi from "@/helpers/fetcher";
+"use client"
 
-
-export default async function Home() {
+export default function Home() {
 
   return (
     <main className="">

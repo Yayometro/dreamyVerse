@@ -1,6 +1,5 @@
 "use client";
 import DreamsCards from "@/components/dreams/dreamsCards/DreamsCards";
-import { useSession } from "next-auth/react";
 import React, { useEffect, useState } from "react";
 import SkeletonCard from "@/components/skeletons/card/CardSkeleton";
 import { IDreamDocument, IUserDocument } from "../../../../dreamyVerse";

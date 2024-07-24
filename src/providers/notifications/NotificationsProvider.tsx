@@ -4,7 +4,7 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import socket from '@/lib/socket';
 import { INotification } from '../../../dreamyVerse';
 import notifier from '@/helpers/notifier';
-import { playNotificationSound } from '@/helpers/soundsHelper';
+import { playNotificationSound, initializeSounds } from '@/helpers/soundsHelper';
 import useUserNavigator from '@/hooks/useUserNavigatorId';
 
 interface SocketContextType {
@@ -19,6 +19,7 @@ export const NotificationsProvider = ({ children }: { children: React.ReactNode 
   const {userId} = useUserNavigator()
 
   useEffect(() => {
+    initializeSounds()
     if(userId){
       socket.emit("identify", userId);
 

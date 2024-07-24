@@ -17,17 +17,13 @@ import {
   Spinner,
 } from "@nextui-org/react";
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { IMessage, IUserDocument, MessageContextType } from "../../../../dreamyVerse";
-import socket from "@/lib/socket";
+import { IUserDocument, MessageContextType } from "../../../../dreamyVerse";
 import useUserNavigator from "@/hooks/useUserNavigatorId";
 import { BiSolidMessageRounded } from "react-icons/bi";
 import MessageCenter from "@/components/messages/messagesCenter/MessageCenter";
 import MessageHistoryNavigator from "@/components/messages/messageHistoryNavigator/MessageHistoryNavigator";
 import MessageTexbox from "@/components/messages/messageTextbox/MessageTexbox";
 import { MessageContext } from "@/providers/messages/MessageProvider";
-import notifier from "@/helpers/notifier";
-import MessageNotificationToast from "@/components/notifications/MessageNotificationToast/MessageNotificationToast";
-import { initializeSounds, playMessageSound } from "@/helpers/soundsHelper";
 
 function MessageBtn({
   userNavigator,
