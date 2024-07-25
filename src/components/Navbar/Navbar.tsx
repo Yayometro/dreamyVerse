@@ -69,7 +69,6 @@ function Navbar() {
                 alt={`profile account dreamyVerse`}
                 width={100}
                 height={100}
-                objectPosition="center"
               />
             </Link>
           </li>
@@ -225,7 +224,6 @@ function Navbar() {
                   alt={`profile account dreamyVerse`}
                   width={100}
                   height={100}
-                  objectPosition="center"
                 />
               </Link>
             </li>

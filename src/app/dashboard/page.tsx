@@ -2,12 +2,14 @@ import React from 'react'
 import { getServerSession } from 'next-auth'
 
 import DashboardClient from '@/components/dashboard/DashboardClient'
+import { redirect } from 'next/navigation'
 
 
 async function Dashboard() {
     const session = await getServerSession()
     if (!session) {
         console.log('No session on Dashboard')
+        redirect("/login")
     }
         
   return (

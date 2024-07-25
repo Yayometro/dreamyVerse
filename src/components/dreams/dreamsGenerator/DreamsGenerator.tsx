@@ -21,15 +21,14 @@ import {
   PopoverTrigger,
   PopoverContent,
   Image,
-  Spinner,
-} from "@nextui-org/react";
+  Spinner
+} from "@nextui-org/react"
 import { MdAddCircle, MdMessage } from "react-icons/md";
 import { IDreamDocument, IUserDocument } from "../../../../dreamyVerse";
 import notifier from "@/helpers/notifier";
 import { parseDate } from "@internationalized/date";
 import { format } from "date-fns";
 import { CldUploadWidget } from "next-cloudinary";
-
 //
 import { FaRegQuestionCircle } from "react-icons/fa";
 import PrivacyDefaultTooltip from "@/components/tooltip/Privacy/PrivacyDefaultTooltip";
@@ -153,10 +152,6 @@ function DreamsGenerator({
 
   // Submiting to back
   const handleSubmit = async () => {
-    if (typeof window === 'undefined') {
-      console.log("Not running on window")
-      return;
-    }
     setIsLoading(true);
     // let temporalDream = formData
     if (!formData.user || formData.user === "") {
@@ -421,6 +416,14 @@ function DreamsGenerator({
                   ""
                 ) : (
                   <div className="w-full h-full flex flex-col justify-center items-center bg-white/5 backdrop-blur-sm z-50 absolute text-center p-4 gap-2 left-0 rounded-[25px]">
+                    <p className=" text-xl text-purple-950 dark:text-white">
+                      {onEditionDream
+                        ? "We are editing your dream"
+                        : "We are creating you dream"}
+                    </p>
+                    <p className=" text-xl text-purple-950 dark:text-white">
+                      Please wait a moment 🤓
+                    </p>
                     <CreatingLottie
                       title={
                         onEditionDream
