@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { FcGoogle } from "react-icons/fc";
-import { quantum } from "ldrs";
 import notifier from "@/helpers/notifier";
 import {
   Button,
@@ -16,9 +15,9 @@ import {
   Spacer,
 } from "@nextui-org/react";
 import { CldUploadWidget } from "next-cloudinary";
-import PopOverUploadRecording from "../popOvers/Informatives/PopOverUploadRecording";
 import zodiacList from "@/helpers/ZodiacList";
 import { FaEye, FaEyeSlash } from "react-icons/fa6";
+import SettingUpLottie from "../lotties/setting up/SettingUp";
 
 export default function RegisterComponent() {
   const [formData, setFormData] = useState({
@@ -43,8 +42,6 @@ export default function RegisterComponent() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
-  //Loader
-  quantum.register();
 
   const passString =
     'The password must have at least one special character "!@#$%^&*(),.?":{}|<>".';
@@ -112,7 +109,6 @@ export default function RegisterComponent() {
           "warning",
           "Verify that password length is higher than 8, that also includes min one capital letter and has at least one special character"
         );
-        console.log(formData.password);
         setFormData({ ...formData, password: "" });
         setLoading(false);
         return false;
@@ -129,7 +125,6 @@ export default function RegisterComponent() {
         avatar: formData.avatar,
         zodiac: formData.zodiac,
       });
-      console.log(response);
       //
       if (response.data) {
         router.push(`/login?mail=${formData.mail}`);
@@ -179,12 +174,8 @@ export default function RegisterComponent() {
         {!loading ? (
           ""
         ) : (
-          <div className="w-full h-full flex flex-col justify-center items-center bg-white/80 z-50 absolute text-center p-4 gap-4 left-0">
-            <l-quantum size="150" speed="3.1" color="purple"></l-quantum>
-            <p className=" text-xl text-purple-800">
-              We are building up your dashboard and data
-            </p>
-            <p className=" text-xl text-purple-800">Please wait a moment 🤓</p>
+          <div className="w-full h-full flex flex-col justify-center items-center bg-white z-50 absolute text-center p-4 gap-4 left-0">
+            <SettingUpLottie title="We are working to set everything up for you" message="Please wait a moment 🤓" custom={true} styles=" w-full h-full text-base pt-4 text-black"/>
           </div>
         )}
       </div>

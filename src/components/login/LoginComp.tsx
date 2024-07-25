@@ -3,16 +3,14 @@ import React, { useEffect, useState } from "react";
 import {
   useRouter,
   useSearchParams,
-  useParams,
-  redirect,
 } from "next/navigation";
 import { FcGoogle } from "react-icons/fc";
 import Link from "next/link";
 import notifier from "@/helpers/notifier";
-import { quantum } from "ldrs";
 import { signIn } from "next-auth/react";
 import { Button, Input } from "@nextui-org/react";
 import { FaEye, FaEyeSlash } from "react-icons/fa6";
+import SettingUpLottie from "../lotties/setting up/SettingUp";
 
 function LoginComp() {
   const [formData, setFormData] = useState({
@@ -34,8 +32,6 @@ function LoginComp() {
       notifier("ok", `${email} was created successfully 🤓`);
     }
   }, [email]);
-  //Loader
-  quantum.register();
   //
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -64,7 +60,6 @@ function LoginComp() {
     try {
       e.preventDefault();
       setLoading(true);
-      // AUTH
       // AUTH
       const authResponse = await signIn("credentials", {
         mail: formData.mail,
@@ -116,12 +111,8 @@ function LoginComp() {
         {!loading ? (
           ""
         ) : (
-          <div className="w-full h-full flex flex-col justify-center items-center bg-white/80 z-50 absolute text-center p-4 gap-4 left-0">
-            <l-quantum size="150" speed="3.1" color="purple"></l-quantum>
-            <p className=" text-xl text-purple-800">
-              We are working to set everything up for you
-            </p>
-            <p className=" text-xl text-purple-800">Please wait a moment 🤓</p>
+          <div className="w-full h-full flex flex-col justify-center items-center bg-white bg-white/80s z-50 absolute text-center p-4 gap-4 left-0">
+            <SettingUpLottie title="We are working to set everything up for you" message="Please wait a moment 🤓" custom={true} styles=" w-full h-full text-base pt-4 text-black"/>
           </div>
         )}
       </div>

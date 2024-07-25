@@ -36,11 +36,11 @@ export default async function RootLayout({
                 defaultTheme="dark"
                 themes={["dark", "light"]}
               >
-                <MessageProvider>
-                  <NotificationsProvider>
+                <NotificationsProvider>
+                  <MessageProvider>
                     <main className="">{children}</main>
-                  </NotificationsProvider>
-                </MessageProvider>
+                  </MessageProvider>
+                </NotificationsProvider>
                 <ToastContainer
                   position="top-right"
                   autoClose={5000}

@@ -33,7 +33,6 @@ import { CldUploadWidget } from "next-cloudinary";
 //
 import { FaRegQuestionCircle } from "react-icons/fa";
 import PrivacyDefaultTooltip from "@/components/tooltip/Privacy/PrivacyDefaultTooltip";
-import { pulsar } from "ldrs";
 import {
   useCreateNewUserDreamMutation,
   useCreateNotificationMutation,
@@ -51,6 +50,7 @@ import UserFollowersSelctor from "@/components/inputs/friendsSelector/UserFollow
 import { useSearchParams } from "next/navigation";
 import useUserNavigator from "@/hooks/useUserNavigatorId";
 import { playNewDreamSound } from "@/helpers/soundsHelper";
+import CreatingLottie from "@/components/lotties/creating/CreatingLottie";
 
 interface DreamsGeneratorPropsTypes {
   dgIsOpen: boolean;
@@ -145,14 +145,6 @@ function DreamsGenerator({
       );
     }
   }, [onEditionDream, qSetVisibilityFor]);
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      //For some reason the pulsar type get's an error on building so this verification is needed.
-      pulsar.register(); 
-    }
-  }, []);
-  
 
   //Handle input change
   const handleInputChange = (key: string, value: any) => {
@@ -429,15 +421,15 @@ function DreamsGenerator({
                   ""
                 ) : (
                   <div className="w-full h-full flex flex-col justify-center items-center bg-white/5 backdrop-blur-sm z-50 absolute text-center p-4 gap-2 left-0 rounded-[25px]">
-                    <l-pulsar size="150" speed="3.1" color="violet"></l-pulsar>
-                    <p className=" text-xl text-purple-950 dark:text-white">
-                      {onEditionDream
-                        ? "We are editing your dream"
-                        : "We are creating you dream"}
-                    </p>
-                    <p className=" text-xl text-purple-950 dark:text-white">
-                      Please wait a moment 🤓
-                    </p>
+                    <CreatingLottie
+                      title={
+                        onEditionDream
+                          ? "We are editing your dream"
+                          : "We are creating you dream"
+                      }
+                      message={`Please wait a moment 🤓`}
+                      styles={`w-full h-full text-base`}
+                    />
                   </div>
                 )}
               </div>
