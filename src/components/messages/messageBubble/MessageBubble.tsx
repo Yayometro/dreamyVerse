@@ -107,18 +107,13 @@ function MessageBubble({
       ) : (
         <Popover placement="top" showArrow={true}>
           <PopoverTrigger>
-            <Button
-              variant="light"
-              size="sm"
-              className={`message-bubble p-0 text-slate-900 dark:text-white `}
-            >
               <div
                 className={`message-bubble w-full flex ${
                   orientation === "left" ? "justify-start" : "justify-end"
                 } max-w-[300px] cursor-pointer`}
               >
                 <div
-                  className={`message-content w-full p-4 rounded-lg ${
+                  className={`message-content w-full h-full max-w-[200px] max-h-[300px] py-2 px-3 rounded-lg text-small ${
                     orientation === "left"
                       ? "bg-gray-200 dark:bg-violet-950"
                       : "bg-violet-200 dark:bg-slate-900"
@@ -127,7 +122,6 @@ function MessageBubble({
                   {message.content.message}
                 </div>
               </div>
-            </Button>
           </PopoverTrigger>
           <PopoverContent className=" bg-slate-300 dark:bg-slate-800 flex items-center justify-center ">
             <ActionsBubbleMessageSections message={message} />
