@@ -22,7 +22,7 @@ export const NotificationsProvider = ({ children }: { children: React.ReactNode 
     initializeSounds()
     if(userId){
       socket.emit("identify", userId);
-
+      console.log("Usuar identified by socketId-userId")
     }
 
     const handleNotification = (notification: INotification) => {
