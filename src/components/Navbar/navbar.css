@@ -70,15 +70,15 @@
     justify-content: start;
   }
 }
-.navbar-col-items li:hover {
+/* .navbar-col-items li:hover {
   background-color: rgb(45, 37, 54);
-}
-.lateral-search-cont :hover {
+} */
+/* .lateral-search-cont :hover {
   background-color: rgb(45, 37, 54);
 }
 .lateral-add-cont:hover{
   background-color: rgb(45, 37, 54);
-}
+} */
 .nv-li-btn {
   display: flex;
   justify-content: center;
@@ -94,9 +94,9 @@
   padding-inline: 5px;
   border-radius: 10px;
 }
-.navbar-col-end-items li:hover {
+/* .navbar-col-end-items li:hover {
   background-color: rgb(45, 37, 54);
-}
+} */
 
 .nav-up {
   animation: fadeInDown;

@@ -12,7 +12,7 @@ import GetUserDreamsLengthBtn from "@/components/buttons/follows/getDreamsOfUser
 function MyProfileHeader({ user }: { user: IUserDocument }) {
     const descriptionPs = "text-sm sm:text-base hover:underline cursor-pointer"
   return (
-    <div className="flex justify-center items-center gap-2 py-4 px-2 bg-default-850 dark:bg-black/30 shadow-lg rounded-2xl">
+    <div className="flex justify-center items-center gap-2 py-4 px-2 bg-default-850 dark:bg-black/30 rounded-2xl">
       <div className="top-header-myprofile justify-center items-center flex w-full gap-6 sm:gap-12">
         <div className="w-fit h-full flex justify-center items-center">
           <GeneralAvatar

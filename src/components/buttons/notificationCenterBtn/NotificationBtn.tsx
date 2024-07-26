@@ -101,7 +101,7 @@ function NotificationBtn({
           <Button
             variant="light"
             size="sm"
-            className=" w-full h-full text-default-100 dark:text-default-900 p-0s px-1 cursor-pointer flex justify-center lg:justify-start items-center"
+            className=" w-full h-full text-default-900 dark:text-default-900 p-0s px-1 cursor-pointer flex justify-center lg:justify-start items-center"
             onClick={() => {
               setActiveNotifySection(true);
               setIsOpen(true);
