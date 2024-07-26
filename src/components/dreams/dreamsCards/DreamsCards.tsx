@@ -38,15 +38,6 @@ function DreamsCards({
   dcUser: IUserDocument;
   navigatorUser: string;
 }) {
-  // console.log({
-  //   idUserDream: dcUser,
-  //   idNavigatorUser: navigatorUser,
-  //   isTrue: dcDream.visibility.visibleFor?.some((id) => {
-  //     console.log(id, navigatorUser, id !== navigatorUser);
-  //     return id !== navigatorUser;
-  //   }),
-  //   visibleFor: dcDream.visibility.visibleFor,
-  // });
   return (
     <div className="w-full">
       {!dcDream || !dcDream._id || !dcUser ? (

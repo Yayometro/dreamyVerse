@@ -214,27 +214,6 @@ function ReactionButton({
       )}
       {!isLoadingPlus ? "" : <Spinner size="sm" />}
     </Button>
-    // <Popover showArrow placement="top-start">
-    //   <PopoverTrigger>
-    //     <Button
-    //       as={"button"}
-    //       isIconOnly
-    //       variant="light"
-    //       color="danger"
-    //       size="sm"
-    //       className=" text-default-900 p-0 cursor-pointer"
-    //     >
-    //       {isLikedAlready ? (
-    //         <FaHeart size={100} className="w-[20px] h-[20px]" />
-    //       ) : (
-    //         <FaRegHeart size={100} className="w-[20px] h-[20px]" />
-    //       )}
-    //     </Button>
-    //   </PopoverTrigger>
-    //   <PopoverContent className="p-1 shadow-xl">
-    //     <ReactionBtnContainer father={father} type="dream" isLikedAlready={isLikedAlready} refetch={refetch}/>
-    //   </PopoverContent>
-    // </Popover>
   );
 }
 

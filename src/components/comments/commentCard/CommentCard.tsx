@@ -46,7 +46,7 @@ function CommentCard({
           <div className="cc-content-header-tab flex justify-between font-bold pr-1">
             <div className="cc-username-and-information flex gap-1.5 items-center text-[12px] hover:underline">
               <Link
-                href={`dashboard/profile/${userWhoComment.username}`}
+                href={`/dashboard/profile/${userWhoComment.username}`}
                 className=""
               >
                 {userWhoComment.username}

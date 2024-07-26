@@ -3,6 +3,7 @@
 import GeneralAvatar from "@/components/user/generalAvtar/GeneralAvtara";
 import { MessageContext } from "@/providers/messages/MessageProvider";
 import { BreadcrumbItem, Breadcrumbs, Button } from "@nextui-org/react";
+import { useRouter } from "next/navigation";
 import React, { useContext } from "react";
 import { FaAngleLeft } from "react-icons/fa6";
 
@@ -19,6 +20,7 @@ function MessageHistoryNavigator() {
   } = context;
   const itemStyle = " hover:underline cursor-pointer";
   const itemColor = "foreground";
+  const router = useRouter()
   return (
     <div className="w-full h-full">
       {navigation === "list" ? (
@@ -47,7 +49,7 @@ function MessageHistoryNavigator() {
               <FaAngleLeft className="w-full h-full" />
             </Button>
           </div>
-          <div className="details flex justify-center items-center">
+          <div className="details flex justify-center items-center cursor-pointer" onClick={() => router.push(`/dashboard/profile/${userSelectedConversation?.username}`)}>
             <GeneralAvatar
               src={`${userSelectedConversation?.avatar || ""}`}
               radius="full"
@@ -56,7 +58,7 @@ function MessageHistoryNavigator() {
             />
           </div>
           <div className="details flex flex-col justify-start items-start">
-            <h1 className=" text-base font-semibold">
+            <h1 className=" text-base font-semibold cursor-pointer hover:underline" onClick={() => router.push(`/dashboard/profile/${userSelectedConversation?.username}`)}>
               {userSelectedConversation?.username}
             </h1>
             <p className=" text-sm">

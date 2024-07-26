@@ -1,15 +1,9 @@
-import DreamIdClient from "@/components/dreams/dreamIdClient/DreamIdClient";
+
 import React from "react";
 import LeftPanel from "@/components/leftPanel/LeftPanel";
-import { getServerSession } from 'next-auth'
-import { redirect } from 'next/navigation'
+import ExternalDreamClientId from "@/components/dreams/externalDreamClientId/ExternalDreamClientId";
 
-async function DreamId({ params }: { params: { id: string } }) {
-  const session = await getServerSession()
-    if (!session) {
-        console.log('No session on Dashboard')
-        redirect("/login")
-    }
+async function ExternalDream({ params }: { params: { id: string } }) {
   if (!params.id)
     return (
       <div className=" w-full w-max-[1200px] flex justify-center items-center">
@@ -21,10 +15,10 @@ async function DreamId({ params }: { params: { id: string } }) {
   
   return (
     <div className="w-full h-full relative flex gap-2 pt-[100px]">
-      <DreamIdClient dreamId={params.id} />
+      <ExternalDreamClientId dreamId={params.id} />
       <LeftPanel />
     </div>
   );
 }
 
-export default DreamId;
+export default ExternalDream;

@@ -1,8 +1,8 @@
 import React from 'react'
 import { getServerSession } from 'next-auth'
+import { redirect } from 'next/navigation'
 
 import DashboardClient from '@/components/dashboard/DashboardClient'
-import { redirect } from 'next/navigation'
 
 
 async function Dashboard() {
