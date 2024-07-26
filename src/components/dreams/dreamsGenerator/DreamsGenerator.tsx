@@ -50,6 +50,7 @@ import { useSearchParams } from "next/navigation";
 import useUserNavigator from "@/hooks/useUserNavigatorId";
 import { playNewDreamSound } from "@/helpers/soundsHelper";
 import CreatingLottie from "@/components/lotties/creating/CreatingLottie";
+import {pulsar} from "ldrs"
 
 interface DreamsGeneratorPropsTypes {
   dgIsOpen: boolean;
@@ -144,6 +145,13 @@ function DreamsGenerator({
       );
     }
   }, [onEditionDream, qSetVisibilityFor]);
+
+  // useEffect(() => {
+  //   if(typeof window !== "undefined"){
+  //     pulsar.register()
+  //   }
+  // }, [])
+  pulsar.register()
 
   //Handle input change
   const handleInputChange = (key: string, value: any) => {
@@ -416,6 +424,7 @@ function DreamsGenerator({
                   ""
                 ) : (
                   <div className="w-full h-full flex flex-col justify-center items-center bg-white/5 backdrop-blur-sm z-50 absolute text-center p-4 gap-2 left-0 rounded-[25px]">
+                    <l-pulsar size="150" speed="3.1" color="violet"></l-pulsar>
                     <p className=" text-xl text-purple-950 dark:text-white">
                       {onEditionDream
                         ? "We are editing your dream"
@@ -424,7 +433,7 @@ function DreamsGenerator({
                     <p className=" text-xl text-purple-950 dark:text-white">
                       Please wait a moment 🤓
                     </p>
-                    <CreatingLottie
+                    {/* <CreatingLottie
                       title={
                         onEditionDream
                           ? "We are editing your dream"
@@ -432,7 +441,7 @@ function DreamsGenerator({
                       }
                       message={`Please wait a moment 🤓`}
                       styles={`w-full h-full text-base`}
-                    />
+                    /> */}
                   </div>
                 )}
               </div>
