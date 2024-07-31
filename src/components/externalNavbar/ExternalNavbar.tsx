@@ -20,19 +20,21 @@ import { useTheme } from "next-themes";
 
 function NavbarExternal() {
   const [toggleNav, setToggleNav] = useState<boolean>(false);
-  const {theme, setTheme} = useTheme()
+  const { theme, setTheme } = useTheme();
 
   const handleToggleNav = () => {
     setToggleNav(!toggleNav);
   };
-  const navbarColorLiHover = "hover:bg-violet-200 dark:hover:bg-slate-900"
+  const navbarColorLiHover = "hover:bg-violet-200 dark:hover:bg-slate-900";
   return (
     <nav className="navbar w-full fixed flex flex-col items-center justify-center bottom-0  md:w-fit md:fixed md:top-0 z-[50]">
       <ul
-        className={`nav-full py-2 px-4 w-full flex flex-col items-center gap-4 dark:bg-black bg-white z-[1001] text-violet-950 dark:text-white dark:border-t-[4px] border-t-[2px] rounded-t-full border-t-violet-700 dark:border-violet-900 overflow-hidden md:w-fit md:flex md:h-[100vh] md:justify-betweens md:border-r-[2px] md:dark:border-r-violet-950  md:border-r-violet-200 md:rounded-none  lg:items-start md:px-2 md:border-t-0 dark:md:border-t-0 lg:px-4 xl:w-[250px] ${
-          toggleNav ? "" : "hidden "
+        className={`nav-full py-2 px-4 w-full flex flex-col items-center gap-4 dark:bg-blacks bg-whites bg-white/5s blur-sms z-[1001] text-violet-950 dark:text-white dark:border-t-[2px] border-t-[2px] rounded-t-full border-t-violet-700 dark:border-violet-900 overflow-hidden md:w-fit md:flex md:h-[100vh] md:justify-betweens  md:border-r-[1px] md:dark:border-r-violet-950  md:border-r-white md:rounded-none  lg:items-start md:px-2 md:border-t-0 dark:md:border-t-0 lg:px-4 xl:w-[250px] ${
+          toggleNav ? "" : "hidden overflow-hidden relative "
         }`}
       >
+        {/* <div className="w-full h-full bg-black/5 blur-sm absolute top-0 right-0"></div> */}
+
         <div className="  hidden w-full h-[20%] md:flex justify-center items-center">
           <li className=" hidden sm:block cursor-pointer">
             <Link href={`/`} className="">
@@ -50,9 +52,7 @@ function NavbarExternal() {
           <li className={"micro-pulse " + navbarColorLiHover}>
             <Link href="/login" className=" nav-link-grand">
               <MdOutlineLogin size={24} className=" " />
-              <p className="md:hidden lg:block text-[16px] font-[400]">
-                Login
-              </p>
+              <p className="md:hidden lg:block text-[16px] font-[400]">Login</p>
             </Link>
           </li>
           <li className={"micro-pulse" + navbarColorLiHover}>
@@ -66,7 +66,10 @@ function NavbarExternal() {
         </div>
         <div className="navbar-col-end-items w-full flex flex-col items-center lg:items-start justify-end cursor-pointer">
           <li
-            className={" justify-center  md:items-end py-[10px] lg:justify-start gap-2"  + navbarColorLiHover}
+            className={
+              " justify-center  md:items-end py-[10px] lg:justify-start gap-2" +
+              navbarColorLiHover
+            }
             onClick={
               theme === "dark"
                 ? () => setTheme("light")
@@ -101,14 +104,27 @@ function NavbarExternal() {
             <MdMenu size={32} />
           </button>
         </li>
+        <li className="nv-li-btn">
+          <Link href={`/dashboard`} className="cursor-pointer">
+            <Image
+              className="w-[50px] min-w-[40px] lg:w-[80px]"
+              src={"/logo1.png"}
+              alt={`profile account dreamyVerse`}
+              width={100}
+              height={100}
+            />
+          </Link>
+        </li>
         <li className="">
           <Link href={`/login`}>
-            Login
+          {/* Login */}
+          <MdOutlineLogin size={24} className=" " />
           </Link>
         </li>
         <li className="">
           <Link href={`/register`}>
-            Register
+          {/* Register */}
+          <FaCashRegister size={20} className="" />
           </Link>
         </li>
         {/* <li className="">
@@ -116,9 +132,8 @@ function NavbarExternal() {
             <FaRocket size={25} />
           </Link>
         </li> */}
-        
       </ul>
-      <ul className="nav-up w-full h-[70px] fixed top-0 left-0 bg-white dark:bg-black flex justify-between items-center border-b-[2px] rounded-b-xl dark:border-violet-900 border-violet-700 py-2 px-2 md:hidden">
+      {/* <ul className="nav-up w-full h-[70px] fixed top-0 left-0 bg-white dark:bg-black flex justify-between items-center border-b-[2px] rounded-b-xl dark:border-violet-900 border-violet-700 py-2 px-2 md:hidden">
         <div className=" w-full h-full flex justify-end items-center gap-1.5 ">
           <div className=" w-[80px] h-full flex justify-center items-center">
             <li className="w-full">
@@ -136,7 +151,7 @@ function NavbarExternal() {
           <div className="w-full h-full flex justify-end items-center gap-2 pr-2">
           </div>
         </div>
-      </ul>
+      </ul> */}
     </nav>
   );
 }
