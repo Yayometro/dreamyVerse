@@ -53,50 +53,54 @@ export default function Home() {
   ];
   const classnameIcon = " animate__pulse";
   return (
-    <div className=" relative w-full h-screen bg-gradient-to-b lg:bg-gradient-to-r from-blacks from-indigo-950 via-indigo-900 to-violet-600 to-purple-600s from-20% via-70%s to-100% text-white overflow-hidden">
-      <div className="navbar sticky iddens w-full h-[50px] md:h-[80px] px-4 flex justify-between items-center z-[2000]">
-        <div className="flex item-center justify-center">
-          <ImageUi
-            src="/logo1.png"
-            className=" w-[50px] lg:w-[60px] pt-2 md:py-0"
-          />
-        </div>
-        <div className="flex gap-8 item-center justify-center">
-          <div className={"micro-pulse "}>
-            <Link
-              href="/login"
-              className=" nav-link-grand flex justify-center items-center gap-2"
-            >
-              <MdOutlineLogin size={24} className="hidden md:block " />
-              <p className=" text-[16px] font-[400]">Login</p>
-            </Link>
+    <div className="total-contan w-full h-screen bg-gradient-to-b lg:bg-gradient-to-r from-blacks from-indigo-950 via-indigo-900 to-violet-600 to-purple-600s from-20% via-70%s to-100% text-white overflow-hidden ">
+
+      <div className="navbar sticky iddens w-full h-[50px] md:h-[80px] px-4 flex justify-center items-center z-[2000] animate__fadeInDown">
+        <div className="width-wrapper-container w-full h-full max-w-[1540px] flex justify-between items-center">
+          <div className="flex item-center justify-center">
+            <ImageUi
+              src="/logo1.png"
+              className=" w-[50px] lg:w-[60px] pt-2 md:py-0"
+            />
           </div>
-          <div className={"micro-pulse "}>
-            <Link
-              href="/register"
-              className=" nav-link-grand flex justify-center items-center gap-2"
-            >
-              <FaCashRegister size={20} className="hidden md:block" />
-              <p className="text-[16px] font-[400]">Register</p>
-            </Link>
+          <div className="flex gap-8 item-center justify-center">
+            <div className={"micro-pulse "}>
+              <Link
+                href="/login"
+                className=" nav-link-grand flex justify-center items-center gap-2"
+              >
+                <MdOutlineLogin size={24} className="hidden md:block " />
+                <p className=" text-[16px] font-[400]">Login</p>
+              </Link>
+            </div>
+            <div className={"micro-pulse "}>
+              <Link
+                href="/register"
+                className=" nav-link-grand flex justify-center items-center gap-2"
+              >
+                <FaCashRegister size={20} className="hidden md:block" />
+                <p className="text-[16px] font-[400]">Register</p>
+              </Link>
+            </div>
           </div>
         </div>
       </div>
 
-      <div className="main-cont w-full h-full max-w-[] relative ">
+      <div className="set-in-middle-cont w-full h-full flex items-center justify-center">
+      <div className="main-cont w-full h-full lg:max-w-[1030px] xl:max-w-[1300px] 2xl:max-w-[1540px] relative ">
         <div className="w-[100%] h-full letters-container text-white flex flex-col items-center gap-4 text-center pt-8 lg:pt-0 2xl:pt-0 px-4 lg:text-start  lg:items-start ">
-          <div className="text-cont flex flex-col gap-4 lg:pt-[60px] 2xl:tp-[30px] lg:w-[70%] lg:pl-4 2xl:pl-6 lg:items-start">
+          <div className="text-cont flex flex-col items-center lg:items-start gap-4 lg:pt-[60px] 2xl:tp-[30px] lg:w-[70%] lg:pl-4 2xl:pl-6">
             <h1 className="text-6xl lg:text-7xl xl:text-8xl 2xl:text-9xl 2xl:w-[60%] font-medium animate__slideInDown">
               CONNECT YOUR DREAMS
             </h1>
-            <h3 className="hidden text-3xl md:block font-thin md:px-8 lg:px-0 lg:max-w-[40%] xl:w-[50%] 2xl:w-[80%] animate__slideInDown">
+            <h3 className="hidden text-center md:block md:w-full lg:text-start text-3xl font-thin lg:w-[70%] xl:w-[60%] animate__slideInDown">
               The first social app dedicated to share your dreams exclusively
             </h3>
             <h3 className=" text-xl font-extralights hidden 2xl:blocks font-thin 2xl:w-[50%]">
               Share your dreams to everybody and connect your meaningful
               experiences across the world
             </h3>
-            <div className="circles hidden w-full max-w-[600px] h-full lg:flex gap-4 items-center py-4 flex-wrap ">
+            <div className="circles hidden w-full md:w-full md:flex md:justify-center md:items-center lg:justify-start max-w-[600px] h-full lg:flex gap-4 items-center py-4 flex-wrap ">
               {circlesInfo.length < 1
                 ? ""
                 : circlesInfo.map((circle, ind) => (
@@ -128,7 +132,7 @@ export default function Home() {
                       ) : (
                         ""
                       )}
-                      <h4 className=" w-full text-base font-thin hidden lg:block text-start">
+                      <h4 className=" w-full text-base font-thin text-start">
                         {circle.description}
                       </h4>
                     </div>
@@ -136,10 +140,7 @@ export default function Home() {
             </div>
           </div>
           <div className=" img-container w-[800px] md:w-[1200px] mt-[-90px] md:mt-[-120px]  bottom-[0%] right-[-30%]  animate__fadeInUp lg:hidden">
-            <ImageUi
-              src={"./mockups/iphone.png"}
-              className=" w-full h-full"
-            />
+            <ImageUi src={"./mockups/iphone.png"} className=" w-full h-full" />
           </div>
         </div>
         <div
@@ -149,10 +150,11 @@ export default function Home() {
         </div>
         {/* XL */}
         <div
-          className={`img-container-big hidden xl:block 2xl:hiddens absolute w-[500px] top-[-50px] right-[-300px] xl:w-[700px] xl:top-[190px] xl:right-[0px] 2xl:w-[800px] 2xl:top-[10px] 2xl:right-[0px]animate__fadeInRight z-0 `}
+          className={`img-container-big hidden xl:block 2xl:hiddens absolute w-[500px] top-[-50px] right-[-300px] xl:w-[700px] xl:top-[190px] xl:right-[0px] 2xl:w-[800px] 2xl:top-[10px] 2xl:right-[0px]animate__fadeInRight animate__fadeInUps  z-0 `}
         >
           <ImageUi src={"./mockups/ipad.png"} className=" w-full h-full" />
         </div>
+      </div>
       </div>
     </div>
   );
