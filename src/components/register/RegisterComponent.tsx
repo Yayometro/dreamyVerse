@@ -19,6 +19,11 @@ import zodiacList from "@/helpers/ZodiacList";
 import { FaEye, FaEyeSlash } from "react-icons/fa6";
 import SettingUpLottie from "../lotties/setting up/SettingUp";
 
+export function validateMail(email: string): boolean {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+}
+
 export default function RegisterComponent() {
   const [formData, setFormData] = useState({
     username: "",
@@ -62,6 +67,7 @@ export default function RegisterComponent() {
       updateValidationMessages();
     }
   }, [formData.password]);
+
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
@@ -110,6 +116,15 @@ export default function RegisterComponent() {
           "Verify that password length is higher than 8, that also includes min one capital letter and has at least one special character"
         );
         setFormData({ ...formData, password: "" });
+        setLoading(false);
+        return false;
+      }
+      if(!validateMail(formData.mail)){
+        notifier(
+          "warning",
+          "Set a valid format mail. It should have a username, a '@' and a '.' to separate the domain with the .con, .net, etc."
+        );
+        setFormData({ ...formData, mail: "" });
         setLoading(false);
         return false;
       }
@@ -221,18 +236,6 @@ export default function RegisterComponent() {
             Username
             <span className=" text-red-400 text-sm">{"  (required)"}</span>
           </label>
-          {/* <input
-            name="username"
-            type="text"
-            className="form-control"
-            id="nameForm"
-            aria-describedby="nameH"
-            placeholder="Type your username... Something223"
-            value={formData.username}
-            onChange={handleChange}
-            required
-            autoFocus
-          /> */}
           <Input
             variant="bordered"
             autoFocus
@@ -251,16 +254,6 @@ export default function RegisterComponent() {
           <label htmlFor="name" className={textLabel}>
             Name
           </label>
-          {/* <input
-            name="name"
-            type="text"
-            className="form-control"
-            id="nameForm"
-            aria-describedby="nameHelp"
-            placeholder="Roberto..."
-            value={formData.name}
-            onChange={handleChange}
-          /> */}
           <Input
             variant="bordered"
             autoFocus
@@ -424,7 +417,7 @@ export default function RegisterComponent() {
           />
           <div
             className={"tooltipPwass"}
-            style={{ color: "red", fontSize: "8px", textAlign: "center" }}
+            style={{ color: "red", fontSize: "10px", textAlign: "center" }}
           >
             <p className={validationMessages.passLength}>
               The password must have at least 8 characters.
@@ -462,6 +455,7 @@ export default function RegisterComponent() {
           )}
         </div>
         <Button
+          isDisabled={formData.username && formData.mail ? false : true}
           type="submit"
           className=" w-[80%] sm:w-[50%] text-white  bg-violet-600 rounded-xl py-5"
         >
